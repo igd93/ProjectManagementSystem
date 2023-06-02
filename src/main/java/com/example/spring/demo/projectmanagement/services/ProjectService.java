@@ -29,6 +29,11 @@ public class ProjectService {
     }
 
     public Project addProject(Project project) {
-        project.setId()
+        project.setId(0);
+        return repo.save(project);
+    }
+
+    public void removeProject(int id) {
+        repo.deleteById(id);
     }
 }
