@@ -3,26 +3,27 @@ package com.example.spring.demo.projectmanagement.entities;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "Project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
-
+    @ManyToMany(mappedBy = "projects")
     private List<Employee> employeeList;
 
     public Project() {
 
+    }
+
+    public Project(String name) {
+        this.name = name;
     }
 
     public Project(String name, List<Employee> employeeList) {

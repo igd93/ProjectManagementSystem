@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "Employee")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee {
     @Id
@@ -19,17 +20,23 @@ public class Employee {
     private String familyName;
     private Date dateOfBirth;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany
     @JoinTable(
         name = "proj_emp_relations",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns =@JoinColumn(name = "project_id")
     )
-    @JsonIgnoreProperties("employees")
+
     private List<Project> projects = new ArrayList<>(); // list of projects an employee is assigned to
 
     public Employee() {
 
+    }
+
+    public Employee(String name, String familyName, Date dateOfBirth) {
+        this.name = name;
+        this.familyName = familyName;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Employee(String name, String familyName, Date dateOfBirth, List<Project> projects) {
