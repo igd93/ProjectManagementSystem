@@ -61,7 +61,8 @@ public class Project {
     }
 
     public void removeEmployee(Employee employee) {
-        employeeList.remove(employee);
+
+        if (employeeList != null )employeeList.remove(employee);
     }
 
     @Override
