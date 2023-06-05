@@ -10,15 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectService {
+public class ProjectService implements ProjectServiceInt {
 
     @Autowired
     ProjectRepository repo;
 
+    @Override
     public List<Project> allProjects() {
         return repo.findAll();
     }
 
+    @Override
     public Project getProject(int id) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
@@ -29,11 +31,13 @@ public class ProjectService {
         }
     }
 
+    @Override
     public Project addProject(Project project) {
         project.setId(0);
         return repo.save(project);
     }
 
+    @Override
     public Project addEmployee(int id, Employee employee) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
@@ -46,6 +50,7 @@ public class ProjectService {
         }
     }
 
+    @Override
     public Project removeEmployee(int id, Employee employee) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
@@ -58,6 +63,7 @@ public class ProjectService {
         }
     }
 
+    @Override
     public void removeProject(int id) {
         repo.deleteById(id);
     }
