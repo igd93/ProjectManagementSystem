@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Employee")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property ="id")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,13 @@ public class Employee {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(
         name = "proj_emp_relations",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns =@JoinColumn(name = "project_id")
     )
-
     private List<Project> projects = new ArrayList<>(); // list of projects an employee is assigned to
 
     public Employee() {

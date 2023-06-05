@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Project")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,9 @@ public class Project {
 
     @Column(unique = true)
     private String name;
-    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+//    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "projects")
+
     private List<Employee> employeeList = new ArrayList<>();
 
     public Project() {
