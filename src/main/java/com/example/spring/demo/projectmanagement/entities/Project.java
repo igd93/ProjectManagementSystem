@@ -14,6 +14,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(unique = true)
     private String name;
     @ManyToMany(mappedBy = "projects")
     private List<Employee> employeeList;
