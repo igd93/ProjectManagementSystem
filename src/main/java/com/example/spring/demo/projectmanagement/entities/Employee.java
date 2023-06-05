@@ -1,5 +1,6 @@
 package com.example.spring.demo.projectmanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -17,6 +18,8 @@ public class Employee {
     private int id;
     private String name;
     private String familyName;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
