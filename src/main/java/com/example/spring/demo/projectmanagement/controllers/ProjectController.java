@@ -1,6 +1,6 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
-import com.example.spring.demo.projectmanagement.dtos.ProjectDTO;
+
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
@@ -20,7 +20,7 @@ public class ProjectController {
     EmployeeService employeeService;
 
     @GetMapping
-    public List<ProjectDTO> allProjects() {
+    public List<Project> allProjects() {
         return projectService.allProjects();
     }
 

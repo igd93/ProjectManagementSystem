@@ -14,7 +14,7 @@ public class EmployeeDTO {
 
     private Date dateOfBirth;
 
-    private List<ProjectDTO> projectsDTO = new ArrayList<>();
+    private List<Project> projectsDTO = new ArrayList<>();
 
     public EmployeeDTO() {
 
@@ -52,11 +52,11 @@ public class EmployeeDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<ProjectDTO> getProjects() {
+    public List<Project> getProjects() {
         return projectsDTO;
     }
 
-    public void setProjects(List<ProjectDTO> projectsDTO) {
+    public void setProjects(List<Project> projectsDTO) {
         this.projectsDTO = projectsDTO;
     }
 }

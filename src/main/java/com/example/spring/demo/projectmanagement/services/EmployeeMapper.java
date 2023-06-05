@@ -2,7 +2,6 @@ package com.example.spring.demo.projectmanagement.services;
 
 import com.example.spring.demo.projectmanagement.dtos.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,13 +10,13 @@ import java.util.stream.Collectors;
 @Component
 public class EmployeeMapper {
 
-    public static EmployeeDTO entityToDTO(Employee employee) {
+    public EmployeeDTO entityToDTO(Employee employee) {
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setFamilyName(employee.getFamilyName());
-        //employeeDTO.setProjects(ProjectMapper.entityToDTO(employee.getProjects()));
+        employeeDTO.setProjects(employee.getProjects());
 
         return employeeDTO;
     }
@@ -32,7 +31,7 @@ public class EmployeeMapper {
         employee.setName(employeeDTO.getName());
         employee.setFamilyName(employeeDTO.getFamilyName());
         employee.setDateOfBirth(employeeDTO.getDateOfBirth());
-        //employee.setProjects(ProjectMapper.dTOToEntity(employeeDTO.getProjects()));
+        employee.setProjects(employeeDTO.getProjects());
         return employee;
     }
 
