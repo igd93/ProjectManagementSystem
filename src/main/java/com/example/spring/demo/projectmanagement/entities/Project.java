@@ -16,7 +16,7 @@ public class Project {
 
     @Column(unique = true)
     private String name;
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Employee> employeeList;
 
     public Project() {

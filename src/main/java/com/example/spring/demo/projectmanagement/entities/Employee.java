@@ -19,7 +19,7 @@ public class Employee {
     private String familyName;
     private Date dateOfBirth;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
         name = "proj_emp_relations",
         joinColumns = @JoinColumn(name = "employee_id"),
