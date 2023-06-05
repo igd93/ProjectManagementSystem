@@ -4,7 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-!**/src/main/resources/*.yml
+
 
 ### STS ###
 .apt_generated
@@ -19,7 +19,7 @@ bin/
 !**/src/test/**/bin/
 
 #Config file
-src/main/resources/application.properties
+src/main/resources/application.yml
 
 ### IntelliJ IDEA ###
 .idea
