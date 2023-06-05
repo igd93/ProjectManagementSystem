@@ -1,5 +1,6 @@
 package com.example.spring.demo.projectmanagement.services;
 
+import com.example.spring.demo.projectmanagement.dtos.ProjectDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ProjectServiceInt {
 
-    List<Project> allProjects();
+    List<ProjectDTO> allProjects();
 
     Project getProject(int id);
 

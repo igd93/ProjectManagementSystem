@@ -1,5 +1,6 @@
 package com.example.spring.demo.projectmanagement.services;
 
+import com.example.spring.demo.projectmanagement.dtos.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.repositories.EmployeeRepository;
@@ -15,9 +16,13 @@ public class EmployeeService implements EmployeeServiceInt {
     @Autowired
     EmployeeRepository repo;
 
+    @Autowired
+    EmployeeMapper employeeMapper;
+
     @Override
-    public List<Employee> allEmployees() {
-        return repo.findAll();
+    public List<EmployeeDTO> allEmployees() {
+        List<Employee> employees = repo.findAll();
+        return employeeMapper.entityToDTO(employees);
     }
 
     @Override
