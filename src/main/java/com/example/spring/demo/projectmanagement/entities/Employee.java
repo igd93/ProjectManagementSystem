@@ -1,9 +1,6 @@
 package com.example.spring.demo.projectmanagement.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -24,12 +21,13 @@ public class Employee {
     private Date dateOfBirth;
 
 //    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
         name = "proj_emp_relations",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns =@JoinColumn(name = "project_id")
     )
+    @JsonIgnoreProperties("employeeList")
     private List<Project> projects = new ArrayList<>(); // list of projects an employee is assigned to
 
     public Employee() {

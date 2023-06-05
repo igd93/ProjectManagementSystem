@@ -1,8 +1,7 @@
 package com.example.spring.demo.projectmanagement.entities;
 
 import com.example.spring.demo.projectmanagement.entities.Employee;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ public class Project {
 
     @Column(unique = true)
     private String name;
-//    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @ManyToMany(mappedBy = "projects")
-
+    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+//    @ManyToMany(mappedBy = "projects")
+    @JsonIgnoreProperties("projects")
     private List<Employee> employeeList = new ArrayList<>();
 
     public Project() {
