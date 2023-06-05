@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Project {
     @Column(unique = true)
     private String name;
     @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<Employee> employeeList;
+    private List<Employee> employeeList = new ArrayList<>();
 
     public Project() {
 
