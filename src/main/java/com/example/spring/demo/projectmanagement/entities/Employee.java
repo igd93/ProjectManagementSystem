@@ -89,11 +89,15 @@ public class Employee {
     }
 
     public void addProject(Project project) {
+
         projects.add(project);
+        project.getEmployeeList().add(this);
     }
 
     public void removeProject(Project project) {
+
         if (projects != null) projects.remove(project);
+        project.getEmployeeList().remove(this);
     }
 
     @Override

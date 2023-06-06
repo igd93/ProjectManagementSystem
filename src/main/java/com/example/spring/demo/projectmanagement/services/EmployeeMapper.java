@@ -16,13 +16,14 @@ public class EmployeeMapper {
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setFamilyName(employee.getFamilyName());
+        employeeDTO.setDateOfBirth(employee.getDateOfBirth());
         employeeDTO.setProjects(employee.getProjects());
 
         return employeeDTO;
     }
 
     public  List<EmployeeDTO> entityToDTO(List<Employee> employees) {
-        return employees.stream().map(x -> entityToDTO(x)).collect(Collectors.toList());
+        return employees.stream().map(this::entityToDTO).collect(Collectors.toList());
     }
 
     public Employee dTOToEntity(EmployeeDTO employeeDTO) {
@@ -36,7 +37,7 @@ public class EmployeeMapper {
     }
 
     public List<Employee> dTOToEntity(List<EmployeeDTO> employeeDTOList) {
-        return employeeDTOList.stream().map(x -> dTOToEntity(x)).collect(Collectors.toList());
+        return employeeDTOList.stream().map(this::dTOToEntity).collect(Collectors.toList());
     }
 
 

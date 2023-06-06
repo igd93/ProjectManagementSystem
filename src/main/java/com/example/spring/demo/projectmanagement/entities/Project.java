@@ -61,11 +61,14 @@ public class Project {
 
     public void addEmployee(Employee employee) {
         employeeList.add(employee);
+        employee.getProjects().add(this);
+
     }
 
     public void removeEmployee(Employee employee) {
 
         if (employeeList != null ) employeeList.remove(employee);
+        employee.getProjects().remove(this);
     }
 
     @Override
