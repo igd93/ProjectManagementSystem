@@ -29,11 +29,15 @@ public class EmployeeController {
         return employeeService.getEmployee(id);
     }
 
+
+    //should return just id
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeService.addEmployee(employee);
     }
 
+
+    // Unacceptable, should use POST
     @PutMapping("/{id}/projects/{project_id}")
     public Employee addProject(@PathVariable int id, @PathVariable int project_id) {
         Project project = projectService.getProject(project_id);

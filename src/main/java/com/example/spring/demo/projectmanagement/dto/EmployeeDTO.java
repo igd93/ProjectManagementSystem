@@ -8,6 +8,8 @@ import java.util.List;
 
 public class EmployeeDTO {
 
+    //Should have a derived class in this package
+
     private int id;
     private String name;
     private String familyName;
