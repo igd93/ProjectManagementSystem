@@ -10,7 +10,7 @@ public interface EmployeeServiceInt {
 
     List<EmployeeDTO> allEmployees();
 
-    Employee getEmployee(int id);
+    EmployeeDTO getEmployee(int id);
 
     Employee addEmployee(Employee employee);
 

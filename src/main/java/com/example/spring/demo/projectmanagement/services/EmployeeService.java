@@ -26,10 +26,11 @@ public class EmployeeService implements EmployeeServiceInt {
     }
 
     @Override
-    public Employee getEmployee(int id) {
+    public EmployeeDTO getEmployee(int id) {
         Optional<Employee> optionalEmployee = repo.findById(id);
         if (optionalEmployee.isPresent()) {
-            return optionalEmployee.get();
+            Employee employee = optionalEmployee.get();
+            return employeeMapper.entityToDTO(employee);
         }
         else {
             throw new RuntimeException("Employee with such id" + id + "does not exist");
