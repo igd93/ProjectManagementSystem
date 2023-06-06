@@ -1,4 +1,4 @@
-package com.example.spring.demo.projectmanagement.dtos;
+package com.example.spring.demo.projectmanagement.dto;
 
 import com.example.spring.demo.projectmanagement.entities.Project;
 
