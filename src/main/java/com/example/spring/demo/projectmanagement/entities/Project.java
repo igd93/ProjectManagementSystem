@@ -17,7 +17,8 @@ public class Project {
 
     @Column(unique = true)
     private String name;
-    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToMany(mappedBy = "projects", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST},
+    fetch = FetchType.LAZY)
 //    @ManyToMany(mappedBy = "projects")
     @JsonIgnoreProperties("projects")
     private List<Employee> employeeList = new ArrayList<>();
