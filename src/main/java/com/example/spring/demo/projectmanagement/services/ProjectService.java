@@ -29,7 +29,7 @@ public class ProjectService implements ProjectServiceInt {
             return optionalProject.get();
         }
         else {
-            throw new RuntimeException("Project with this id " + id + "does not exist");
+            throw new RuntimeException("Project with this id " + id + " does not exist");
         }
     }
 
@@ -48,7 +48,7 @@ public class ProjectService implements ProjectServiceInt {
             return repo.save(project);
         }
         else {
-            throw new RuntimeException("The Project with id" + id + "does not exist");
+            throw new RuntimeException("The Project with id " + id + " does not exist");
         }
     }
 
@@ -61,7 +61,7 @@ public class ProjectService implements ProjectServiceInt {
             return repo.save(project);
         }
         else {
-            throw new RuntimeException("Project with id " + id + "does not exist");
+            throw new RuntimeException("Project with id " + id + " does not exist");
         }
     }
 

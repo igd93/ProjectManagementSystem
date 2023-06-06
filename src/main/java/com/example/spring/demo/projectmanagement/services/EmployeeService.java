@@ -33,7 +33,7 @@ public class EmployeeService implements EmployeeServiceInt {
             return employeeMapper.entityToDTO(employee);
         }
         else {
-            throw new RuntimeException("Employee with such id" + id + "does not exist");
+            throw new RuntimeException("Employee with such id " + id + " does not exist");
         }
     }
 
@@ -52,7 +52,7 @@ public class EmployeeService implements EmployeeServiceInt {
             return repo.save(employee);
         }
         else {
-            throw new RuntimeException("Employee with such id" + id + "does not exist");
+            throw new RuntimeException("Employee with such id " + id + " does not exist");
         }
     }
 
@@ -65,7 +65,7 @@ public class EmployeeService implements EmployeeServiceInt {
             return repo.save(employee);
         }
         else {
-            throw new RuntimeException("Employee with such id " + id + "does not exist");
+            throw new RuntimeException("Employee with such id " + id + " does not exist");
         }
     }
 
