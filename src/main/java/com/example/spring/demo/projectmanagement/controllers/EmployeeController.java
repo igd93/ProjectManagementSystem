@@ -3,8 +3,8 @@ package com.example.spring.demo.projectmanagement.controllers;
 import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.services.EmployeeService;
-import com.example.spring.demo.projectmanagement.services.ProjectService;
+import com.example.spring.demo.projectmanagement.services.EmployeeServiceImp;
+import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,45 +14,45 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
     @Autowired
-    EmployeeService employeeService;
+    EmployeeServiceImp employeeServiceImp;
 
     @Autowired
-    ProjectService projectService;
+    ProjectServiceImp projectServiceImp;
 
     @GetMapping
     public List<EmployeeDTO> allEmployees() {
-        return employeeService.allEmployees();
+        return employeeServiceImp.allEmployees();
     }
 
     @GetMapping("/{id}")
     public EmployeeDTO getEmployee(@PathVariable int id) {
-        return employeeService.getEmployee(id);
+        return employeeServiceImp.getEmployee(id);
     }
 
 
     //should return just id
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+        return employeeServiceImp.addEmployee(employee);
     }
 
 
     // Unacceptable, should use POST
     @PutMapping("/{id}/projects/{project_id}")
     public Employee addProject(@PathVariable int id, @PathVariable int project_id) {
-        Project project = projectService.getProject(project_id);
-        return employeeService.addProject(id, project);
+        Project project = projectServiceImp.getProject(project_id);
+        return employeeServiceImp.addProject(id, project);
     }
 
     @PutMapping("/{id}/remove_projects/{project_id}")
     public Employee removeProject(@PathVariable int id, @PathVariable int project_id) {
-        Project project = projectService.getProject(project_id);
-        return employeeService.removeProject(id, project);
+        Project project = projectServiceImp.getProject(project_id);
+        return employeeServiceImp.removeProject(id, project);
     }
 
     @DeleteMapping("/{id}")
     public void deleteMapping(@PathVariable int id) {
-        employeeService.deleteEmployee(id);
+        employeeServiceImp.deleteEmployee(id);
     }
 
 

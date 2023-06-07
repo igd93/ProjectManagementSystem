@@ -3,77 +3,20 @@ package com.example.spring.demo.projectmanagement.services;
 import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class EmployeeService implements EmployeeServiceInt {
+public interface EmployeeService {
 
-    @Autowired
-    EmployeeRepository repo;
+    List<EmployeeDTO> allEmployees();
 
-    @Autowired
-    EmployeeMapper employeeMapper;
+    EmployeeDTO getEmployee(int id);
 
-    @Override
-    public List<EmployeeDTO> allEmployees() {
-        List<Employee> employees = repo.findAll();
-        return employeeMapper.entityToDTO(employees);
-    }
+    Employee addEmployee(Employee employee);
 
-    @Override
-    public EmployeeDTO getEmployee(int id) {
-        Optional<Employee> optionalEmployee = repo.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            return employeeMapper.entityToDTO(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-    }
+    Employee addProject(int id, Project project);
 
-    @Override
-    public Employee addEmployee(Employee employee) {
-        employee.setId(0);
-        return repo.save(employee);
-    }
+    Employee removeProject(int id, Project project);
 
-    @Override
-    public Employee addProject(int id, Project project) {
-        Optional<Employee> optionalEmployee = repo.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            employee.addProject(project);
-            return repo.save(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-    }
-
-    @Override
-    public Employee removeProject(int id, Project project) {
-        Optional<Employee> optionalEmployee = repo.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            employee.removeProject(project);
-            return repo.save(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-    }
-
-    @Override
-    public void deleteEmployee(int id) {
-        repo.deleteById(id);
-    }
-
-
-
+    void deleteEmployee(int id);
 }

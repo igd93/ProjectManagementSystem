@@ -1,4 +1,4 @@
-package com.example.spring.demo.projectmanagement.services;
+package com.example.spring.demo.projectmanagement.mappers;
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
