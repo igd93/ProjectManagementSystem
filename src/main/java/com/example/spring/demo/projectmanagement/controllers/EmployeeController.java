@@ -38,13 +38,13 @@ public class EmployeeController {
 
 
     // Unacceptable, should use POST
-    @PutMapping("/{id}/projects/{project_id}")
+    @PostMapping ("/{id}/projects/{project_id}")
     public Employee addProject(@PathVariable int id, @PathVariable int project_id) {
         Project project = projectServiceImp.getProject(project_id);
         return employeeServiceImp.addProject(id, project);
     }
 
-    @PutMapping("/{id}/remove_projects/{project_id}")
+    @PostMapping("/{id}/remove_projects/{project_id}")
     public Employee removeProject(@PathVariable int id, @PathVariable int project_id) {
         Project project = projectServiceImp.getProject(project_id);
         return employeeServiceImp.removeProject(id, project);

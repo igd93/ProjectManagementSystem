@@ -39,14 +39,14 @@ public class ProjectController {
         return projectServiceImp.addProject(project);
     }
 
-    @PutMapping("/{id}/employees/{employee_id}")
+    @PostMapping("/{id}/employees/{employee_id}")
     public Project addEmployee(@PathVariable int id, @PathVariable int employee_id) {
         EmployeeDTO employeeDTO = employeeServiceImp.getEmployee(employee_id);
         Employee employee = employeeMapper.dTOToEntity(employeeDTO);
         return projectServiceImp.addEmployee(id, employee);
     }
 
-    @PutMapping("/{id}/remove_employees/{employee_id}")
+    @PostMapping("/{id}/remove_employees/{employee_id}")
     public Project removeEmployee(@PathVariable int id, @PathVariable int employee_id) {
         EmployeeDTO employeeDTO = employeeServiceImp.getEmployee(employee_id);
         Employee employee = employeeMapper.dTOToEntity(employeeDTO);
