@@ -52,7 +52,6 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
-        employee.setId(0);
         return repo.save(employee);
     }
     @Override

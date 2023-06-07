@@ -54,7 +54,6 @@ public class ProjectServiceImp implements ProjectService {
 
     @Override
     public Project addProject(Project project) {
-        project.setId(0);
         return repo.save(project);
     }
 
