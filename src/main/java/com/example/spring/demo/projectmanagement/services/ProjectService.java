@@ -17,6 +17,8 @@ public interface ProjectService {
 
     Project addProject(Project project);
 
+    Project updateProject(int id, Project updateProject);
+
     Project addEmployee(int id, Employee employee);
 
     Project removeEmployee(int id, Employee employee);

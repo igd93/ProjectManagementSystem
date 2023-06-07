@@ -56,6 +56,11 @@ public class EmployeeController {
         return employeeServiceImp.removeProject(id, project);
     }
 
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updateEmployee) {
+        return employeeServiceImp.updateEmployee(id, updateEmployee);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteMapping(@PathVariable int id) {
         employeeServiceImp.deleteEmployee(id);

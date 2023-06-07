@@ -1,11 +1,9 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
 import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
 import com.example.spring.demo.projectmanagement.services.EmployeeServiceImp;
 import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +46,11 @@ public class ProjectController {
     public Project removeEmployee(@PathVariable int id, @PathVariable int employee_id) {
         Employee employee = employeeServiceImp.getEmployee(employee_id);
         return projectServiceImp.removeEmployee(id, employee);
+    }
+
+    @PutMapping("/{id}")
+    public Project updateProject(@PathVariable int id, @RequestBody Project updatedProject) {
+        return projectServiceImp.updateProject(id, updatedProject);
     }
 
     @DeleteMapping("/{id}")

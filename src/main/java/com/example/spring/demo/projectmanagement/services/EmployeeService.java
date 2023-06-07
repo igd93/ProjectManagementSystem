@@ -16,6 +16,8 @@ public interface EmployeeService {
 
     Employee addEmployee(Employee employee);
 
+    Employee updateEmployee(int id, Employee updatedEmployee);
+
     Employee addProject(int id, Project project);
 
     Employee removeProject(int id, Project project);

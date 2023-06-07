@@ -55,6 +55,20 @@ public class EmployeeServiceImp implements EmployeeService {
         employee.setId(0);
         return repo.save(employee);
     }
+    @Override
+    public Employee updateEmployee(int id, Employee updatedEmployee) {
+        Optional<Employee> optionalEmployee = repo.findById(id);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            employee.setName(updatedEmployee.getName());
+            employee.setFamilyName(updatedEmployee.getFamilyName());
+            employee.setProjects(updatedEmployee.getProjects());
+            return repo.save(employee);
+        }
+        else {
+            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
+        }
+    }
 
     @Override
     public Employee addProject(int id, Project project) {

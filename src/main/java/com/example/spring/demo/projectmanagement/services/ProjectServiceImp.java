@@ -59,6 +59,20 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
+    public Project updateProject(int id, Project updateProject) {
+        Optional<Project> optionalProject = repo.findById(id);
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
+            project.setName(updateProject.getName());
+            project.setEmployeeList(updateProject.getEmployeeList());
+            return repo.save(project);
+        }
+        else {
+            throw new RuntimeException("Project with id " + id + " cannot be updated, as it does not exist");
+        }
+    }
+
+    @Override
     public Project addEmployee(int id, Employee employee) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
