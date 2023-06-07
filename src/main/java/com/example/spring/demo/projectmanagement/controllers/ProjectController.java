@@ -2,6 +2,7 @@ package com.example.spring.demo.projectmanagement.controllers;
 
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
@@ -21,17 +22,15 @@ public class ProjectController {
     @Autowired
     EmployeeServiceImp employeeServiceImp;
 
-    @Autowired
-    EmployeeMapper employeeMapper;
 
     @GetMapping
-    public List<Project> allProjects() {
+    public List<ProjectDTO> allProjects() {
         return projectServiceImp.allProjects();
     }
 
     @GetMapping("/{id}")
-    public Project getProject(@PathVariable int id) {
-        return projectServiceImp.getProject(id);
+    public ProjectDTO getProjectDTO(@PathVariable int id) {
+        return projectServiceImp.getProjectDTO(id);
     }
 
     @PostMapping
@@ -41,15 +40,13 @@ public class ProjectController {
 
     @PostMapping("/{id}/employees/{employee_id}")
     public Project addEmployee(@PathVariable int id, @PathVariable int employee_id) {
-        EmployeeDTO employeeDTO = employeeServiceImp.getEmployee(employee_id);
-        Employee employee = employeeMapper.dTOToEntity(employeeDTO);
+        Employee employee = employeeServiceImp.getEmployee(employee_id);
         return projectServiceImp.addEmployee(id, employee);
     }
 
     @PostMapping("/{id}/remove_employees/{employee_id}")
     public Project removeEmployee(@PathVariable int id, @PathVariable int employee_id) {
-        EmployeeDTO employeeDTO = employeeServiceImp.getEmployee(employee_id);
-        Employee employee = employeeMapper.dTOToEntity(employeeDTO);
+        Employee employee = employeeServiceImp.getEmployee(employee_id);
         return projectServiceImp.removeEmployee(id, employee);
     }
 

@@ -1,8 +1,10 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
+import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
+import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,26 @@ public class ProjectServiceImp implements ProjectService {
     @Autowired
     ProjectRepository repo;
 
+    @Autowired
+    ProjectMapper projectMapper;
+
 
     @Override
-    public List<Project> allProjects() {
-        return repo.findAll();
+    public List<ProjectDTO> allProjects() {
+        List<Project> projects =  repo.findAll();
+        return projectMapper.entityToDTO(projects);
+    }
+
+    @Override
+    public ProjectDTO getProjectDTO(int id) {
+        Optional<Project> optionalProject = repo.findById(id);
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
+            return projectMapper.entityToDTO(project);
+        }
+        else {
+            throw new RuntimeException("Project with this id " + id + " does not exist");
+        }
     }
 
     @Override
@@ -31,6 +49,7 @@ public class ProjectServiceImp implements ProjectService {
         else {
             throw new RuntimeException("Project with this id " + id + " does not exist");
         }
+
     }
 
     @Override

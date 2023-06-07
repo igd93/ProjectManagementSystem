@@ -27,7 +27,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO getEmployee(int id) {
+    public EmployeeDTO getEmployeeDTO(int id) {
         Optional<Employee> optionalEmployee = repo.findById(id);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
@@ -36,6 +36,18 @@ public class EmployeeServiceImp implements EmployeeService {
         else {
             throw new RuntimeException("Employee with such id " + id + " does not exist");
         }
+    }
+
+    @Override
+    public Employee getEmployee(int id) {
+        Optional<Employee> optionalEmployee = repo.findById(id);
+        if (optionalEmployee.isPresent()) {
+            return optionalEmployee.get();
+        }
+        else {
+            throw new RuntimeException("Employee with such id " + id + " does not exist");
+        }
+
     }
 
     @Override

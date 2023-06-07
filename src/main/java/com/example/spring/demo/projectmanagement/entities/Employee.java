@@ -23,7 +23,7 @@ public class Employee {
 //    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
-        name = "proj_emp_relations",
+        name = "proj_emp",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns =@JoinColumn(name = "project_id")
     )
