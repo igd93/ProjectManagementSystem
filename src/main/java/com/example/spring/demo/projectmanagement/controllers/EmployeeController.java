@@ -47,15 +47,17 @@ public class EmployeeController {
 
 
     // Unacceptable, should use POST
-    @PostMapping ("/{id}/projects/{project_id}")
-    public Employee addProject(@PathVariable int id, @PathVariable int project_id) {
-        Project project = projectService.getProject(project_id);
+    @PostMapping ("/{id}/projects/{projectId}")
+    public Employee addProject(@PathVariable int id, @PathVariable int projectId) {
+        Project project = projectService.getProject(projectId);
         return employeeService.addProject(id, project);
     }
 
-    @PostMapping("/{id}/remove_projects/{project_id}")
-    public Employee removeProject(@PathVariable int id, @PathVariable int project_id) {
-        Project project = projectService.getProject(project_id);
+    //Camel case
+
+    @PostMapping("/{id}/removeProjects/{projectId}")
+    public Employee removeProject(@PathVariable int id, @PathVariable int projectId) {
+        Project project = projectService.getProject(projectId);
         return employeeService.removeProject(id, project);
     }
 

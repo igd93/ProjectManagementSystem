@@ -39,15 +39,15 @@ public class ProjectController {
         return projectService.addProject(project);
     }
 
-    @PostMapping("/{id}/employees/{employee_id}")
-    public Project addEmployee(@PathVariable int id, @PathVariable int employee_id) {
-        Employee employee = employeeService.getEmployee(employee_id);
+    @PostMapping("/{id}/employees/{employeeId}")
+    public Project addEmployee(@PathVariable int id, @PathVariable int employeeId) {
+        Employee employee = employeeService.getEmployee(employeeId);
         return projectService.addEmployee(id, employee);
     }
 
-    @PostMapping("/{id}/remove_employees/{employee_id}")
-    public Project removeEmployee(@PathVariable int id, @PathVariable int employee_id) {
-        Employee employee = employeeService.getEmployee(employee_id);
+    @PostMapping("/{id}/removeEmployees/{employeeId}")
+    public Project removeEmployee(@PathVariable int id, @PathVariable int employeeId) {
+        Employee employee = employeeService.getEmployee(employeeId);
         return projectService.removeEmployee(id, employee);
     }
 
