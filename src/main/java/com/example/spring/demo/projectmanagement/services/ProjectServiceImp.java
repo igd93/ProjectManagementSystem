@@ -1,7 +1,7 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
@@ -24,16 +24,20 @@ public class ProjectServiceImp implements ProjectService {
         this.repo = repo;
         this.projectMapper = projectMapper;
     }
+    @Override
+    public List<Project> projectIdsToProject(List<Long> projectIds) {
+        return repo.findAllById(projectIds);
+    }
 
 
     @Override
-    public List<ProjectDTO> allProjects() {
+    public List<ProjectResponseDTO> allProjects() {
         List<Project> projects =  repo.findAll();
         return projectMapper.entityToDTO(projects);
     }
 
     @Override
-    public ProjectDTO getProjectDTO(int id) {
+    public ProjectResponseDTO getProjectDTO(Long id) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();
@@ -45,7 +49,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public Project getProject(int id) {
+    public Project getProject(Long id) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             return optionalProject.get();
@@ -62,7 +66,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public Project updateProject(int id, Project updateProject) {
+    public Project updateProject(Long id, Project updateProject) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();
@@ -76,7 +80,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public Project addEmployee(int id, Employee employee) {
+    public Project addEmployee(Long id, Employee employee) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();
@@ -89,7 +93,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public Project removeEmployee(int id, Employee employee) {
+    public Project removeEmployee(Long id, Employee employee) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();
@@ -102,7 +106,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public void removeProject(int id) {
+    public void removeProject(Long id) {
         repo.deleteById(id);
     }
 }

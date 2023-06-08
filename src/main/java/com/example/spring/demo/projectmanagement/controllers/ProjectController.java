@@ -1,7 +1,7 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
@@ -25,12 +25,12 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<ProjectDTO> allProjects() {
+    public List<ProjectResponseDTO> allProjects() {
         return projectService.allProjects();
     }
 
     @GetMapping("/{id}")
-    public ProjectDTO getProjectDTO(@PathVariable int id) {
+    public ProjectResponseDTO getProjectDTO(@PathVariable int id) {
         return projectService.getProjectDTO(id);
     }
 

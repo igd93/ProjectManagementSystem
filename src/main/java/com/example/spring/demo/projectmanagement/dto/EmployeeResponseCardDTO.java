@@ -6,27 +6,27 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDTO {
+public class EmployeeResponseCardDTO {
 
     //Should have a derived class in this package
 
-    private int id;
+    private Long id;
     private String name;
     private String familyName;
 
     private Date dateOfBirth;
 
-    private List<Project> projectsDTO = new ArrayList<>();
+    private List<ProjectResponseDTO> projects;
 
-    public EmployeeDTO() {
-
+    public EmployeeResponseCardDTO() {
+        projects = new ArrayList<>();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,11 +54,11 @@ public class EmployeeDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Project> getProjects() {
-        return projectsDTO;
+    public List<ProjectResponseDTO> getProjects() {
+        return projects;
     }
 
-    public void setProjects(List<Project> projectsDTO) {
-        this.projectsDTO = projectsDTO;
+    public void setProjects(List<ProjectResponseDTO> projects) {
+        this.projects = projects;
     }
 }
