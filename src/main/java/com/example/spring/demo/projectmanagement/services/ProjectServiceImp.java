@@ -1,7 +1,7 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
@@ -27,13 +27,13 @@ public class ProjectServiceImp implements ProjectService {
 
 
     @Override
-    public List<ProjectDTO> allProjects() {
+    public List<ProjectResponseDTO> allProjects() {
         List<Project> projects =  repo.findAll();
         return projectMapper.entityToDTO(projects);
     }
 
     @Override
-    public ProjectDTO getProjectDTO(int id) {
+    public ProjectResponseDTO getProjectDTO(int id) {
         Optional<Project> optionalProject = repo.findById(id);
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();

@@ -1,20 +1,20 @@
 package com.example.spring.demo.projectmanagement.dto;
 
-public class ProjectDTO {
+public class ProjectRequestDTO {
 
-    private int id;
+    private long id;
 
     private String name;
 
-    public ProjectDTO() {
+    public ProjectRequestDTO() {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -25,5 +25,4 @@ public class ProjectDTO {
     public void setName(String name) {
         this.name = name;
     }
-
 }

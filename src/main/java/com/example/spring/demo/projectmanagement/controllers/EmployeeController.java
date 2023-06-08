@@ -1,20 +1,13 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
-import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
-import com.example.spring.demo.projectmanagement.services.EmployeeServiceImp;
 import com.example.spring.demo.projectmanagement.services.ProjectService;
-import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
@@ -29,12 +22,12 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<EmployeeDTO> allEmployees() {
+    public List<EmployeeResponseDTO> allEmployees() {
         return employeeService.allEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeDTO getEmployeeDTO(@PathVariable int id) {
+    public EmployeeResponseDTO getEmployeeDTO(@PathVariable int id) {
         return employeeService.getEmployeeDTO(id);
     }
 

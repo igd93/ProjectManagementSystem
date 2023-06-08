@@ -1,7 +1,7 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ProjectService {
 
-    List<ProjectDTO> allProjects();
+    List<ProjectResponseDTO> allProjects();
 
-    ProjectDTO getProjectDTO(int id);
+    ProjectResponseDTO getProjectDTO(int id);
 
     Project getProject(int id);
 

@@ -1,6 +1,6 @@
 package com.example.spring.demo.projectmanagement.services;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
@@ -25,13 +25,13 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> allEmployees() {
+    public List<EmployeeResponseDTO> allEmployees() {
         List<Employee> employees = repo.findAll();
         return employeeMapper.entityToDTO(employees);
     }
 
     @Override
-    public EmployeeDTO getEmployeeDTO(int id) {
+    public EmployeeResponseDTO getEmployeeDTO(int id) {
         Optional<Employee> optionalEmployee = repo.findById(id);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
