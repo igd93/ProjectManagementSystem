@@ -1,7 +1,15 @@
 package com.example.spring.demo.projectmanagement.mappers;
 
+import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
+import com.example.spring.demo.projectmanagement.entities.Project;
+import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
+import com.example.spring.demo.projectmanagement.services.EmployeeService;
+import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +20,7 @@ public class EmployeeMapper {
 
     private final ProjectMapper projectMapper;
 
+    @Autowired
     public EmployeeMapper(ProjectMapper projectMapper) {
         this.projectMapper = projectMapper;
     }
@@ -28,23 +37,43 @@ public class EmployeeMapper {
         return employeeResponseDTO;
     }
 
-    public  List<EmployeeResponseDTO> entityToDTO(List<Employee> employees) {
-        return employees.stream().map(this::entityToDTO).collect(Collectors.toList());
+    public EmployeeResponseCardDTO entityToCardDTO(Employee employee) {
+        EmployeeResponseCardDTO employeeResponseCardDTO = new EmployeeResponseCardDTO();
+        employeeResponseCardDTO.setId(employee.getId());
+        employeeResponseCardDTO.setName(employee.getName());
+        employeeResponseCardDTO.setFamilyName(employee.getFamilyName());
+        employeeResponseCardDTO.setDateOfBirth(employee.getDateOfBirth());
+        return employeeResponseCardDTO;
     }
 
-    public Employee dTOToEntity(EmployeeResponseDTO employeeResponseDTO) {
+    public EmployeeResponseIdDTO employeeToId(Employee employee) {
+        EmployeeResponseIdDTO employeeResponseIdDTO = new EmployeeResponseIdDTO();
+        employeeResponseIdDTO.setId(employee.getId());
+        return employeeResponseIdDTO;
+    }
+
+
+    public List<EmployeeResponseCardDTO> entityToCardDTO(List<Employee> employees) {
+        return  employees.stream().map(this::entityToCardDTO).collect(Collectors.toList());
+    }
+
+    public Employee dTOToEntity(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = new Employee();
-        employee.setId(employeeResponseDTO.getId());
-        employee.setName(employeeResponseDTO.getName());
-        employee.setFamilyName(employeeResponseDTO.getFamilyName());
-        employee.setDateOfBirth(employeeResponseDTO.getDateOfBirth());
-        employee.setProjects(employeeResponseDTO.getProjects());
+        employee.setName(employeeRequestDTO.getName());
+        employee.setFamilyName(employeeRequestDTO.getFamilyName());
+        employee.setDateOfBirth(employeeRequestDTO.getDateOfBirth());
+        List<Long> projectIds = employeeRequestDTO.getProjects();
+        if (!projectIds.isEmpty()) {
+            employee.setProjects(projectMapper.projectIdsToProject(projectIds));
+        }
         return employee;
     }
 
-    public List<Employee> dTOToEntity(List<EmployeeResponseDTO> employeeResponseDTOList) {
-        return employeeResponseDTOList.stream().map(this::dTOToEntity).collect(Collectors.toList());
-    }
+
+
+//    public List<Employee> dTOToEntity(List<EmployeeResponseDTO> employeeResponseDTOList) {
+//        return employeeResponseDTOList.stream().map(this::dTOToEntity).collect(Collectors.toList());
+//    }
 
 
 }

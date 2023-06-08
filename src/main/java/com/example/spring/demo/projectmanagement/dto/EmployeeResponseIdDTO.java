@@ -1,12 +1,12 @@
 package com.example.spring.demo.projectmanagement.dto;
 
 //This should not be reused for both Employee ad Project
-public class CustomResponseDTO {
+public class EmployeeResponseIdDTO {
 
     private Long id;
 
 
-    public CustomResponseDTO() {
+    public EmployeeResponseIdDTO() {
 
     }
 

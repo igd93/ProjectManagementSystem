@@ -1,7 +1,9 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
@@ -24,19 +26,19 @@ public class EmployeeController {
 
     //Should be a separate DTO without the list of Projects
     @GetMapping
-    public List<EmployeeResponseDTO> getEmployees() {
+    public List<EmployeeResponseCardDTO> getEmployees() {
         return employeeService.allEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeResponseDTO getEmployee(@PathVariable int id) {
+    public EmployeeResponseIdDTO getEmployee(@PathVariable Long id) {
         return employeeService.getEmployeeDTO(id);
     }
 
 
     //should return just customDTO with id in it
     @PostMapping
-    public Employee createEmployee(@RequestBody EmployeeRequestDTO employee) {
+    public EmployeeResponseIdDTO createEmployee(@RequestBody EmployeeRequestDTO employee) {
         return employeeService.addEmployee(employee);
     }
 
@@ -66,7 +68,7 @@ public class EmployeeController {
 
 
     @DeleteMapping("/{id}")
-    public void deleteMapping(@PathVariable int id) {
+    public void deleteMapping(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
     }
 

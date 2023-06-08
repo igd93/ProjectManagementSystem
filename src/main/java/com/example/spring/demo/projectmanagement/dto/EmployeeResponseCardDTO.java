@@ -1,20 +1,24 @@
 package com.example.spring.demo.projectmanagement.dto;
 
+import com.example.spring.demo.projectmanagement.entities.Project;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeResponseDTO {
+public class EmployeeResponseCardDTO {
 
+    //Should have a derived class in this package
 
     private Long id;
     private String name;
     private String familyName;
+
     private Date dateOfBirth;
 
     private List<ProjectResponseDTO> projects;
 
-    public EmployeeResponseDTO() {
+    public EmployeeResponseCardDTO() {
         projects = new ArrayList<>();
     }
 
@@ -22,7 +26,7 @@ public class EmployeeResponseDTO {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

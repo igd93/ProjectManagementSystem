@@ -9,21 +9,23 @@ import java.util.List;
 
 public interface ProjectService {
 
+    List<Project> projectIdsToProject(List<Long> projectIds);
+
     List<ProjectResponseDTO> allProjects();
 
-    ProjectResponseDTO getProjectDTO(int id);
+    ProjectResponseDTO getProjectDTO(Long id);
 
-    Project getProject(int id);
+    Project getProject(Long id);
 
     Project addProject(Project project);
 
-    Project updateProject(int id, Project updateProject);
+    Project updateProject(Long id, Project updateProject);
 
-    Project addEmployee(int id, Employee employee);
+    Project addEmployee(Long id, Employee employee);
 
-    Project removeEmployee(int id, Employee employee);
+    Project removeEmployee(Long id, Employee employee);
 
-    void removeProject(int id);
+    void removeProject(Long id);
 
 
 }
