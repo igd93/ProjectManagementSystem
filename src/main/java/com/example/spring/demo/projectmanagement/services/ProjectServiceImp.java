@@ -15,11 +15,15 @@ import java.util.Optional;
 @Service
 public class ProjectServiceImp implements ProjectService {
 
-    @Autowired
+
     ProjectRepository repo;
+    ProjectMapper projectMapper;
 
     @Autowired
-    ProjectMapper projectMapper;
+    public ProjectServiceImp(ProjectRepository repo, ProjectMapper projectMapper) {
+        this.repo = repo;
+        this.projectMapper = projectMapper;
+    }
 
 
     @Override

@@ -14,11 +14,15 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImp implements EmployeeService {
 
-    @Autowired
-    EmployeeRepository repo;
+
+    private final EmployeeRepository repo;
+    private final EmployeeMapper employeeMapper;
 
     @Autowired
-    EmployeeMapper employeeMapper;
+    public EmployeeServiceImp(EmployeeRepository repo, EmployeeMapper employeeMapper) {
+        this.repo = repo;
+        this.employeeMapper = employeeMapper;
+    }
 
     @Override
     public List<EmployeeDTO> allEmployees() {
