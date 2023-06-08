@@ -10,15 +10,16 @@ public class EmployeeResponseDTO {
 
     //Should have a derived class in this package
 
-    private long id;
+    private Long id;
     private String name;
     private String familyName;
 
     private Date dateOfBirth;
 
-    private List<Project> projectsDTO = new ArrayList<>();
+    private List<ProjectResponseDTO> projects;
 
     public EmployeeResponseDTO() {
+
 
     }
 
@@ -54,11 +55,11 @@ public class EmployeeResponseDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Project> getProjects() {
-        return projectsDTO;
+    public List<ProjectResponseDTO> getProjects() {
+        return projects;
     }
 
-    public void setProjects(List<Project> projectsDTO) {
-        this.projectsDTO = projectsDTO;
+    public void setProjects(List<ProjectResponseDTO> projects) {
+        this.projects = projects;
     }
 }

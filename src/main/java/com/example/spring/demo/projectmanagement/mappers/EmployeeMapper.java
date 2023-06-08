@@ -10,6 +10,12 @@ import java.util.stream.Collectors;
 @Component
 public class EmployeeMapper {
 
+    private final ProjectMapper projectMapper;
+
+    public EmployeeMapper(ProjectMapper projectMapper) {
+        this.projectMapper = projectMapper;
+    }
+    //general mapper for request and response
     public EmployeeResponseDTO entityToDTO(Employee employee) {
 
         EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
@@ -17,7 +23,7 @@ public class EmployeeMapper {
         employeeResponseDTO.setName(employee.getName());
         employeeResponseDTO.setFamilyName(employee.getFamilyName());
         employeeResponseDTO.setDateOfBirth(employee.getDateOfBirth());
-        employeeResponseDTO.setProjects(employee.getProjects());
+        employeeResponseDTO.setProjects(projectMapper.entityToDTO(employee.getProjects()));
 
         return employeeResponseDTO;
     }

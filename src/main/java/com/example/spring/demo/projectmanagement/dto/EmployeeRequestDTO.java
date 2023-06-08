@@ -7,22 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRequestDTO {
-    private long id;
     private String name;
     private String familyName;
     private Date dateOfBirth;
-    private List<ProjectResponseDTO> projects = new ArrayList<>();
+
+    //initialize in constructor
+    private List<Long> projects = new ArrayList<>();
 
     public EmployeeRequestDTO() {
 
     }
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -48,11 +43,11 @@ public class EmployeeRequestDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setProjects(List<ProjectResponseDTO> projects) {
+    public void setProjects(List<Long> projects) {
         this.projects = projects;
     }
 
-    public List<ProjectResponseDTO> getProjects() {
+    public List<Long> getProjects() {
         return projects;
     }
 }

@@ -1,9 +1,10 @@
 package com.example.spring.demo.projectmanagement.dto;
 
+//This should not be reused for both Employee ad Project
 public class CustomResponseDTO {
 
-    private long id;
-    private String message;
+    private Long id;
+
 
     public CustomResponseDTO() {
 
@@ -17,11 +18,4 @@ public class CustomResponseDTO {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
