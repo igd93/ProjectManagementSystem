@@ -20,7 +20,6 @@ public class Employee {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
 
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
         name = "proj_emp",
