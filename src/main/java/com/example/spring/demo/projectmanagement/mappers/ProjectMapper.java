@@ -2,9 +2,9 @@ package com.example.spring.demo.projectmanagement.mappers;
 
 import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.services.ProjectService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,11 +14,6 @@ import java.util.stream.Collectors;
 @Component
 public class ProjectMapper {
 
-    private final ProjectService projectService;
-
-    public ProjectMapper(ProjectService projectService) {
-        this.projectService = projectService;
-    }
 
     public ProjectResponseDTO entityToDTO(Project project) {
         ProjectResponseDTO projectResponseDTO = new ProjectResponseDTO();
@@ -27,8 +22,12 @@ public class ProjectMapper {
         return projectResponseDTO;
     }
 
-    public List<Project> projectIdsToProject(List<Long> projectIds) {
-        return projectService.projectIdsToProject(projectIds);
+
+
+    public ProjectResponseIdDTO idToDTO(Project project) {
+        ProjectResponseIdDTO projectResponseIdDTO = new ProjectResponseIdDTO();
+        projectResponseIdDTO.setId(project.getId());
+        return projectResponseIdDTO;
     }
 
     public List<ProjectResponseDTO> entityToDTO(List<Project> projects) {

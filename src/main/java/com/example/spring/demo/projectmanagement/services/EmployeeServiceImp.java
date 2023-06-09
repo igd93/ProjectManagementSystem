@@ -2,6 +2,7 @@ package com.example.spring.demo.projectmanagement.services;
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
@@ -36,28 +37,17 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponseCardDTO> allEmployees() {
+    public List<EmployeeResponseDTO> allEmployees() {
         List<Employee> employees = employeeRepository.findAll();
-        return employeeMapper.entityToCardDTO(employees);
+        return employeeMapper.entityToDTO(employees);
     }
 
     @Override
-    public EmployeeResponseIdDTO getEmployeeDTO(Long id) {
+    public EmployeeResponseCardDTO getEmployee(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
-            return employeeMapper.employeeToId(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-    }
-
-    @Override
-    public Employee getEmployee(Long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            return optionalEmployee.get();
+            return employeeMapper.entityToCardDTO(employee);
         }
         else {
             throw new RuntimeException("Employee with such id " + id + " does not exist");
@@ -68,6 +58,10 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
+        List<Long> projectIds = employeeRequestDTO.getProjects();
+        if(!projectIds.isEmpty()) {
+            employee.setProjects(projectRepository.findAllById(projectIds));
+        }
         Employee savedEmployee = employeeRepository.save(employee);
         EmployeeResponseIdDTO id = new EmployeeResponseIdDTO();
         id.setId(savedEmployee.getId());
@@ -79,12 +73,15 @@ public class EmployeeServiceImp implements EmployeeService {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
-            employee.setName(updatedEmployee.getName());
-            employee.setFamilyName(updatedEmployee.getFamilyName());
+            if (updatedEmployee.getName() != null) employee.setName(updatedEmployee.getName());
+            if (updatedEmployee.getFamilyName() != null) employee.setFamilyName(updatedEmployee.getFamilyName());
+            if (updatedEmployee.getDateOfBirth() != null) employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
             List<Long> projectIds = updatedEmployee.getProjects();
-            List<Project> projects =
-            employee.setProjects(updatedEmployee.getProjects());
-            return employeeRepository.save(employee);
+            if(!projectIds.isEmpty()) {
+                employee.setProjects(projectRepository.findAllById(projectIds));
+            }
+            Employee savedEmployee = employeeRepository.save(employee);
+            return employeeMapper.entityToCardDTO(savedEmployee);
         }
         else {
             throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
