@@ -54,10 +54,11 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(Long id) {
+    public EmployeeResponseCardDTO getEmployee(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isPresent()) {
-            return optionalEmployee.get();
+            Employee employee = optionalEmployee.get();
+            return employeeMapper.entityToCardDTO(employee);
         }
         else {
             throw new RuntimeException("Employee with such id " + id + " does not exist");
@@ -74,22 +75,21 @@ public class EmployeeServiceImp implements EmployeeService {
         return id;
     }
 
-    @Override
-    public EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            employee.setName(updatedEmployee.getName());
-            employee.setFamilyName(updatedEmployee.getFamilyName());
-            List<Long> projectIds = updatedEmployee.getProjects();
-            List<Project> projects =
-            employee.setProjects(updatedEmployee.getProjects());
-            return employeeRepository.save(employee);
-        }
-        else {
-            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
-        }
-    }
+//    @Override
+//    public EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
+//        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+//        if (optionalEmployee.isPresent()) {
+//            Employee employee = optionalEmployee.get();
+//            employee.setName(updatedEmployee.getName());
+//            employee.setFamilyName(updatedEmployee.getFamilyName());
+//            List<Long> projectIds = updatedEmployee.getProjects();
+//            employee.setProjects(updatedEmployee.getProjects());
+//            return employeeRepository.save(employee);
+//        }
+//        else {
+//            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
+//        }
+//    }
 
     @Override
     public void linkProject(Long employeeId, Long projectId) {

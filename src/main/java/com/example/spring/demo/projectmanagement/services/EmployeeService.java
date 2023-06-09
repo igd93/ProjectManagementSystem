@@ -15,15 +15,15 @@ public interface EmployeeService {
 
     EmployeeResponseIdDTO getEmployeeDTO(Long id);
 
-    Employee getEmployee(Long id);
+    EmployeeResponseCardDTO getEmployee(Long id);
 
     EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employee);
 
-    Employee updateEmployee(Long id, Employee updatedEmployee);
+//    void updateEmployee(Long id, EmployeeRequestDTO updatedEmployee);
 
     void linkProject(Long employeeId, Long projectId);
 
-    void unlinkProject(Long id, Project project);
+    void unlinkProject(Long id, Long projectId);
 
     void deleteEmployee(Long id);
 }
