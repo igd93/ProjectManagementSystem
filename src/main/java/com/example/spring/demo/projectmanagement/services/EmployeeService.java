@@ -11,9 +11,7 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeResponseCardDTO> allEmployees();
-
-    EmployeeResponseIdDTO getEmployeeDTO(Long id);
+    List<EmployeeResponseDTO> allEmployees();
 
     EmployeeResponseCardDTO getEmployee(Long id);
 
