@@ -17,7 +17,7 @@ public interface EmployeeService {
 
     EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employee);
 
-//    void updateEmployee(Long id, EmployeeRequestDTO updatedEmployee);
+    EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee);
 
     void linkProject(Long employeeId, Long projectId);
 

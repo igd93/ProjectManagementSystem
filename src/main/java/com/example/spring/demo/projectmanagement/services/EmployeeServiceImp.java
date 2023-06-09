@@ -68,21 +68,25 @@ public class EmployeeServiceImp implements EmployeeService {
         return id;
     }
 
-//    @Override
-//    public EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
-//        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-//        if (optionalEmployee.isPresent()) {
-//            Employee employee = optionalEmployee.get();
-//            employee.setName(updatedEmployee.getName());
-//            employee.setFamilyName(updatedEmployee.getFamilyName());
-//            List<Long> projectIds = updatedEmployee.getProjects();
-//            employee.setProjects(updatedEmployee.getProjects());
-//            return employeeRepository.save(employee);
-//        }
-//        else {
-//            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
-//        }
-//    }
+    @Override
+    public EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            if (updatedEmployee.getName() != null) employee.setName(updatedEmployee.getName());
+            if (updatedEmployee.getFamilyName() != null) employee.setFamilyName(updatedEmployee.getFamilyName());
+            if (updatedEmployee.getDateOfBirth() != null) employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
+            List<Long> projectIds = updatedEmployee.getProjects();
+            if(!projectIds.isEmpty()) {
+                employee.setProjects(projectRepository.findAllById(projectIds));
+            }
+            Employee savedEmployee = employeeRepository.save(employee);
+            return employeeMapper.entityToCardDTO(savedEmployee);
+        }
+        else {
+            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
+        }
+    }
 
     @Override
     public void linkProject(Long employeeId, Long projectId) {
