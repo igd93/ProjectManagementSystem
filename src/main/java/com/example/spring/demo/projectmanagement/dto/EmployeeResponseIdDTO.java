@@ -10,6 +10,10 @@ public class EmployeeResponseIdDTO {
 
     }
 
+    public EmployeeResponseIdDTO(Long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }
