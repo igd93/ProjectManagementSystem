@@ -2,7 +2,7 @@ package com.example.spring.demo.projectmanagement.dto;
 
 public class ProjectRequestDTO {
 
-    private long id;
+    private Long id;
 
     private String name;
 

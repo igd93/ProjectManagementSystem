@@ -1,10 +1,9 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
 
+import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
-import com.example.spring.demo.projectmanagement.entities.Employee;
-import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.services.EmployeeService;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
 import com.example.spring.demo.projectmanagement.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +15,10 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final EmployeeService employeeService;
 
     @Autowired
-    public ProjectController(ProjectService projectService, EmployeeService employeeService) {
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
-        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -30,34 +27,32 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ProjectResponseDTO getProjectDTO(@PathVariable int id) {
+    public ProjectResponseDTO getProjectDTO(@PathVariable Long id) {
         return projectService.getProjectDTO(id);
     }
 
     @PostMapping
-    public Project addProject(@RequestBody Project project) {
-        return projectService.addProject(project);
+    public ProjectResponseIdDTO createProject(@RequestBody ProjectRequestDTO project) {
+        return projectService.createProject(project);
     }
 
-    @PostMapping("/{id}/employees/{employeeId}")
-    public Project addEmployee(@PathVariable int id, @PathVariable int employeeId) {
-        Employee employee = employeeService.getEmployee(employeeId);
-        return projectService.addEmployee(id, employee);
-    }
+//    @PostMapping("/{id}/employees/{employeeId}")
+//    public void assignEmployee(@PathVariable Long projectId, @PathVariable Long employeeId) {
+//        projectService.assignEmployee(projectId, employeeId);
+//    }
 
-    @PostMapping("/{id}/removeEmployees/{employeeId}")
-    public Project removeEmployee(@PathVariable int id, @PathVariable int employeeId) {
-        Employee employee = employeeService.getEmployee(employeeId);
-        return projectService.removeEmployee(id, employee);
-    }
+//    @DeleteMapping("/{id}/employees/{employeeId}")
+//    public void unassignEmployee(@PathVariable Long projectId, @PathVariable Long employeeId) {
+//        projectService.unassignEmployee(projectId, employeeId);
+//    }
 
-    @PutMapping("/{id}")
-    public Project updateProject(@PathVariable int id, @RequestBody Project updatedProject) {
-        return projectService.updateProject(id, updatedProject);
-    }
+//    @PutMapping("/{id}")
+//    public void updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
+//        projectService.updateProject(id, updatedProject);
+//    }
 
     @DeleteMapping("/{id}")
-    public void deleteProject(@PathVariable int id) {
+    public void deleteProject(@PathVariable Long id) {
         projectService.removeProject(id);
     }
 

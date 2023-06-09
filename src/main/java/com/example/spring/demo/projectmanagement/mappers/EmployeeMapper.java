@@ -5,10 +5,6 @@ import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
-import com.example.spring.demo.projectmanagement.entities.Project;
-import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
-import com.example.spring.demo.projectmanagement.services.EmployeeService;
-import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +28,7 @@ public class EmployeeMapper {
         employeeResponseDTO.setName(employee.getName());
         employeeResponseDTO.setFamilyName(employee.getFamilyName());
         employeeResponseDTO.setDateOfBirth(employee.getDateOfBirth());
-        employeeResponseDTO.setProjects(projectMapper.entityToDTO(employee.getProjects()));
-
+        //employeeResponseDTO.setProjects(projectMapper.entityToDTO(employee.getProjects()));
         return employeeResponseDTO;
     }
 
