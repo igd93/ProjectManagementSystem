@@ -11,9 +11,11 @@ import com.example.spring.demo.projectmanagement.repositories.EmployeeRepository
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
@@ -44,28 +46,23 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public EmployeeResponseCardDTO getEmployee(Long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            return employeeMapper.entityToCardDTO(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee with such id " + id + " does not exist"));
+        return employeeMapper.entityToCardDTO(employee);
     }
 
     @Override
     public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
         List<Long> projectIds = employeeRequestDTO.getProjects();
-        if(!projectIds.isEmpty()) {
-            employee.setProjects(projectRepository.findAllById(projectIds));
+        if(!CollectionUtils.isEmpty(projectIds)) {
+            List<Project> projects = projectRepository.findAllById(projectIds);
+            if (projects.size() != projectIds.size())
+                projectIds.remove(projects.stream().map(Project::getId).toList());
+            employee.setProjects();
         }
-        Employee savedEmployee = employeeRepository.save(employee);
-        EmployeeResponseIdDTO id = new EmployeeResponseIdDTO();
-        id.setId(savedEmployee.getId());
-        return id;
+        Long employeeId = employeeRepository.save(employee).getId();
+        return new EmployeeResponseIdDTO(employeeId);
     }
 
     @Override
