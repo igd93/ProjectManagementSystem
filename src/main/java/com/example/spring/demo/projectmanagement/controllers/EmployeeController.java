@@ -2,8 +2,8 @@ package com.example.spring.demo.projectmanagement.controllers;
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
-import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +23,13 @@ public class EmployeeController {
 
     //Should be a separate DTO without the list of Projects
     @GetMapping
-    public List<EmployeeResponseCardDTO> getEmployees() {
+    public List<EmployeeResponseDTO> getEmployees() {
         return employeeService.allEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeResponseIdDTO getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployeeDTO(id);
+    public EmployeeResponseCardDTO getEmployee(@PathVariable Long id) {
+        return employeeService.getEmployee(id);
     }
 
 
@@ -41,14 +41,14 @@ public class EmployeeController {
 
     //ResponseEntity
     // Unacceptable, should use POST
-    @PostMapping ("/{id}/projects/{projectId}/")
+    @PostMapping ("/{id}/projects/{projectId}")
     public void linkProject(@PathVariable Long id, @PathVariable Long projectId) {
         employeeService.linkProject(id, projectId);
     }
 
     //Camel case
 
-    @DeleteMapping("/{id}/projects/{projectId}/")
+    @DeleteMapping("/{id}/projects/{projectId}")
     public void unlinkProject(@PathVariable Long id, @PathVariable Long projectId) {
         employeeService.unlinkProject(id, projectId);
     }

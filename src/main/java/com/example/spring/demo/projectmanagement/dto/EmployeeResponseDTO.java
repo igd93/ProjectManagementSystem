@@ -12,10 +12,10 @@ public class EmployeeResponseDTO {
     private String familyName;
     private Date dateOfBirth;
 
-    private List<ProjectResponseDTO> projects;
+
 
     public EmployeeResponseDTO() {
-        projects = new ArrayList<>();
+
     }
 
     public long getId() {
@@ -50,11 +50,5 @@ public class EmployeeResponseDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<ProjectResponseDTO> getProjects() {
-        return projects;
-    }
 
-    public void setProjects(List<ProjectResponseDTO> projects) {
-        this.projects = projects;
-    }
 }

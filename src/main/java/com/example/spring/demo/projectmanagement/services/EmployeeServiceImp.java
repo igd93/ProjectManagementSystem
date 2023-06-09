@@ -2,6 +2,7 @@ package com.example.spring.demo.projectmanagement.services;
 
 import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
@@ -36,21 +37,9 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponseCardDTO> allEmployees() {
+    public List<EmployeeResponseDTO> allEmployees() {
         List<Employee> employees = employeeRepository.findAll();
-        return employeeMapper.entityToCardDTO(employees);
-    }
-
-    @Override
-    public EmployeeResponseIdDTO getEmployeeDTO(Long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            return employeeMapper.employeeToId(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
+        return employeeMapper.entityToDTO(employees);
     }
 
     @Override
@@ -69,6 +58,10 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
+        List<Long> projectIds = employeeRequestDTO.getProjects();
+        if(!projectIds.isEmpty()) {
+            employee.setProjects(projectRepository.findAllById(projectIds));
+        }
         Employee savedEmployee = employeeRepository.save(employee);
         EmployeeResponseIdDTO id = new EmployeeResponseIdDTO();
         id.setId(savedEmployee.getId());

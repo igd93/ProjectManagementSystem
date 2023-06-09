@@ -17,14 +17,14 @@ public class Employee {
     private String name;
     private String familyName;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
-        name = "proj_emp",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns =@JoinColumn(name = "project_id")
+        name = "projEmp",
+        joinColumns = @JoinColumn(name = "employeeId"),
+        inverseJoinColumns =@JoinColumn(name = "projectId")
     )
     @JsonIgnoreProperties("employeeList")
     private List<Project> projects = new ArrayList<>(); // list of projects an employee is assigned to
