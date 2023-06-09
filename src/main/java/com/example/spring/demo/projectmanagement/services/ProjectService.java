@@ -20,7 +20,7 @@ public interface ProjectService {
 
     ProjectResponseIdDTO createProject(ProjectRequestDTO project);
 
-    //void updateProject(Long id, ProjectRequestDTO updateProject);
+   ProjectResponseDTO updateProject(Long id, ProjectRequestDTO updateProject);
 
     //void assignEmployee(Long projectId, Long employeeId);
 

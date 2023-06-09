@@ -75,19 +75,19 @@ public class ProjectServiceImp implements ProjectService {
         return projectMapper.idToDTO(savedProject);
     }
 
-//    @Override
-//    public void updateProject(Long id, Project updateProject) {
-//        Optional<Project> optionalProject = projectRepository.findById(id);
-//        if (optionalProject.isPresent()) {
-//            Project project = optionalProject.get();
-//            project.setName(updateProject.getName());
-//            project.setEmployeeList(updateProject.getEmployeeList());
-//            projectRepository.save(project);
-//        }
-//        else {
-//            throw new RuntimeException("Project with id " + id + " cannot be updated, as it does not exist");
-//        }
-//    }
+    @Override
+    public ProjectResponseDTO updateProject(Long id, ProjectRequestDTO updateProject) {
+        Optional<Project> optionalProject = projectRepository.findById(id);
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
+            if (project.getName() != null) project.setName(updateProject.getName());
+            Project savedProject = projectRepository.save(project);
+            return projectMapper.entityToDTO(savedProject);
+        }
+        else {
+            throw new RuntimeException("Project with id " + id + " cannot be updated, as it does not exist");
+        }
+    }
 
 //    @Override
 //    public void assignEmployee(Long projectId, Long employeeId) {

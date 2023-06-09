@@ -23,10 +23,10 @@ public class Project {
     fetch = FetchType.LAZY)
 //    @ManyToMany(mappedBy = "projects")
     @JsonIgnoreProperties("projects")
-    private List<Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList;
 
     public Project() {
-
+        employeeList = new ArrayList<>();
     }
 
     public Project(String name) {
