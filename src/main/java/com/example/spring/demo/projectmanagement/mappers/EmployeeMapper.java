@@ -5,7 +5,7 @@ import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Employee;
-import com.example.spring.demo.projectmanagement.services.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,6 +16,7 @@ public class EmployeeMapper {
 
     private final ProjectMapper projectMapper;
 
+    @Autowired
     public EmployeeMapper(ProjectMapper projectMapper) {
         this.projectMapper = projectMapper;
     }

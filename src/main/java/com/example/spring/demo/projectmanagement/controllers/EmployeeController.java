@@ -54,10 +54,10 @@ public class EmployeeController {
     }
 
     //Patch instead of Put
-//    @PutMapping("/{id}")
-//    public void updateEmployee(@PathVariable Long id, @RequestBody Employee updateEmployee) {
-//        employeeService.updateEmployee(id, updateEmployee);
-//    }
+    @PatchMapping("/{id}")
+    public EmployeeResponseCardDTO updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDTO updateEmployee) {
+        return employeeService.updateEmployee(id, updateEmployee);
+    }
 
 
     @DeleteMapping("/{id}")
