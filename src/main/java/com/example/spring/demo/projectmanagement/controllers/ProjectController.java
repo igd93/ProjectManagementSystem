@@ -24,15 +24,15 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDTO>> allProjects() {
+    public ResponseEntity<List<ProjectResponseDTO>> getProjects() {
         List<ProjectResponseDTO> projectResponseDTOS = projectService.allProjects();
         return ResponseEntity.ok(projectResponseDTOS);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> getProjectDTO(@PathVariable Long id) {
-        ProjectResponseDTO projectResponseDTO = projectService.getProjectDTO(id);
+    public ResponseEntity<ProjectResponseDTO> getProject(@PathVariable Long id) {
+        ProjectResponseDTO projectResponseDTO = projectService.getProject(id);
         return ResponseEntity.ok(projectResponseDTO);
     }
 
@@ -52,16 +52,17 @@ public class ProjectController {
 //        projectService.unassignEmployee(projectId, employeeId);
 //    }
 
+    // Fix to NoContent and void body
     @PatchMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
-       ProjectResponseDTO projectResponseDTO =  projectService.updateProject(id, updatedProject);
-       return ResponseEntity.ok(projectResponseDTO);
+    public ResponseEntity<Void> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
+       projectService.updateProject(id, updatedProject);
+       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.removeProject(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

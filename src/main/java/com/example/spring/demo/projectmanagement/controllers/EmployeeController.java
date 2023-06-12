@@ -44,7 +44,7 @@ public class EmployeeController {
     //ResponseEntity
     // Unacceptable, should use POST
     @PostMapping ("/{id}/projects/{projectId}")
-    public ResponseEntity<?> linkProject(@PathVariable Long id, @PathVariable Long projectId) {
+    public ResponseEntity<Void> linkProject(@PathVariable Long id, @PathVariable Long projectId) {
         employeeService.linkProject(id, projectId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -52,23 +52,23 @@ public class EmployeeController {
     //Camel case
 
     @DeleteMapping("/{id}/projects/{projectId}")
-    public ResponseEntity<?> unlinkProject(@PathVariable Long id, @PathVariable Long projectId) {
+    public ResponseEntity<Void> unlinkProject(@PathVariable Long id, @PathVariable Long projectId) {
         employeeService.unlinkProject(id, projectId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    //Patch instead of Put
+    //No content 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeResponseCardDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDTO updateEmployee) {
-        EmployeeResponseCardDTO updatedRecord = employeeService.updateEmployee(id, updateEmployee);
-        return ResponseEntity.ok(updatedRecord);
+    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDTO updateEmployee) {
+        employeeService.updateEmployee(id, updateEmployee);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMapping(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMapping(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

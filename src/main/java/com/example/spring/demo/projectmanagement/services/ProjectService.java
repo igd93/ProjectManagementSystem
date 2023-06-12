@@ -14,13 +14,11 @@ public interface ProjectService {
 
     List<ProjectResponseDTO> allProjects();
 
-    ProjectResponseDTO getProjectDTO(Long id);
-
     ProjectResponseDTO getProject(Long id);
 
     ProjectResponseIdDTO createProject(ProjectRequestDTO project);
 
-   ProjectResponseDTO updateProject(Long id, ProjectRequestDTO updateProject);
+    void updateProject(Long id, ProjectRequestDTO updateProject);
 
     //void assignEmployee(Long projectId, Long employeeId);
 

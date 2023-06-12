@@ -10,7 +10,10 @@ import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
 import com.example.spring.demo.projectmanagement.repositories.EmployeeRepository;
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,47 +47,53 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public EmployeeResponseCardDTO getEmployee(Long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            return employeeMapper.entityToCardDTO(employee);
-        }
-        else {
-            throw new RuntimeException("Employee with such id " + id + " does not exist");
-        }
-
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with such id "
+                        + id + " does not exist"));
+        return employeeMapper.entityToCardDTO(employee);
     }
 
     @Override
     public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
         List<Long> projectIds = employeeRequestDTO.getProjects();
-        if(!projectIds.isEmpty()) {
-            employee.setProjects(projectRepository.findAllById(projectIds));
+        if(!CollectionUtils.isEmpty(projectIds)) {
+            List<Project> projects = projectRepository.findAllById(projectIds);
+            if (projects.size() != projectIds.size()) {
+                projectIds.removeAll(projects.stream().map(Project::getId).toList());
+                throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Records with the ids "
+                        + projectIds + " do not exist");
+            }
+            else {
+                employee.setProjects(projects);
+            }
         }
-        Employee savedEmployee = employeeRepository.save(employee);
-        EmployeeResponseIdDTO id = new EmployeeResponseIdDTO();
-        id.setId(savedEmployee.getId());
-        return id;
+        Long employeeId = employeeRepository.save(employee).getId();
+        return new EmployeeResponseIdDTO(employeeId);
     }
 
     @Override
-    public EmployeeResponseCardDTO updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            if (updatedEmployee.getName() != null) employee.setName(updatedEmployee.getName());
-            if (updatedEmployee.getFamilyName() != null) employee.setFamilyName(updatedEmployee.getFamilyName());
-            if (updatedEmployee.getDateOfBirth() != null) employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
-            List<Long> projectIds = updatedEmployee.getProjects();
-            if(!projectIds.isEmpty()) {
-                employee.setProjects(projectRepository.findAllById(projectIds));
+    public void updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee with id "
+                        + id + " cannot be updated as it does not exist"));
+        if (updatedEmployee.getName() != null)
+            employee.setName(updatedEmployee.getName());
+        if (updatedEmployee.getFamilyName() != null)
+            employee.setFamilyName(updatedEmployee.getFamilyName());
+        if (updatedEmployee.getDateOfBirth() != null)
+            employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
+        List<Long> projectIds = updatedEmployee.getProjects();
+        if (!CollectionUtils.isEmpty(projectIds)) {
+            List<Project> projects = projectRepository.findAllById(projectIds);
+            if (projects.size() != projectIds.size()) {
+                projectIds.removeAll(projects.stream().map(Project::getId).toList());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Records with the ids "
+                        + projectIds + " do not exist");
+            } else {
+                employee.setProjects(projects);
             }
-            Employee savedEmployee = employeeRepository.save(employee);
-            return employeeMapper.entityToCardDTO(savedEmployee);
-        }
-        else {
-            throw new RuntimeException("The employee with id " + id + " cannot be updated as it does not exist");
+            employeeRepository.save(employee);
         }
     }
 
@@ -99,8 +108,8 @@ public class EmployeeServiceImp implements EmployeeService {
             employeeRepository.save(employee);
         }
         else {
-            throw new RuntimeException("Employee with id " + employeeId + "or project with id "
-                    + projectId + " does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + employeeId
+                    + "or project with id " + projectId + " does not exist");
         }
     }
 
@@ -115,8 +124,8 @@ public class EmployeeServiceImp implements EmployeeService {
             employeeRepository.save(employee);
         }
         else {
-            throw new RuntimeException("Employee with id " + employeeId + "or project with id "
-                    + projectId + " does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id "
+                    + employeeId + "or project with id " + projectId + " does not exist");
         }
     }
 
