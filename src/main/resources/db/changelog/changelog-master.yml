@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: idrozhil
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/create-table-employee.sql
+  - changeSet:
+      id: 2
+      author: idrozhil
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/create-table-project.sql
+  - changeSet:
+      id: 3
+      author: idrozhil
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/create-table-projectEmployee.sql
