@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: 1
-      author: idrozhil
-      changes:
-        - sqlFile:
-            path: sql/schema.sql
-            stripComments: true
-            splitStatements: true

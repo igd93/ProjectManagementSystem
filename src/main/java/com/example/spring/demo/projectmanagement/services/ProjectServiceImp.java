@@ -7,6 +7,8 @@ import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,8 @@ import java.util.List;
 @Service
 public class ProjectServiceImp implements ProjectService {
 
-
-    ProjectRepository projectRepository;
-    ProjectMapper projectMapper;
+    private final ProjectRepository projectRepository;
+    private final ProjectMapper projectMapper;
 
     @Autowired
     public ProjectServiceImp(ProjectRepository projectRepository,
