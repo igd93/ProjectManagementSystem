@@ -5,6 +5,9 @@ import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
 import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
 import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
 import com.example.spring.demo.projectmanagement.services.ProjectService;
+import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,8 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
+    Logger logger = LoggerFactory.getLogger(ProjectServiceImp.class);
+
     @Autowired
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -25,6 +30,7 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity<List<ProjectResponseDTO>> getProjects() {
+        logger.info("Getting the list of all projects");
         List<ProjectResponseDTO> projectResponseDTOS = projectService.allProjects();
         return ResponseEntity.ok(projectResponseDTOS);
 
@@ -32,12 +38,14 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> getProject(@PathVariable Long id) {
+        logger.info("Getting the project with id {}", id);
         ProjectResponseDTO projectResponseDTO = projectService.getProject(id);
         return ResponseEntity.ok(projectResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity<ProjectResponseIdDTO> createProject(@RequestBody ProjectRequestDTO project) {
+        logger.info("Creating a project {} ", project.getName());
         ProjectResponseIdDTO projectResponseIdDTO = projectService.createProject(project);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectResponseIdDTO);
     }
@@ -55,12 +63,14 @@ public class ProjectController {
     // Fix to NoContent and void body
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
+       logger.info("Updating the project {} id", id);
        projectService.updateProject(id, updatedProject);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+        logger.info("Deleting the project with {}", id);
         projectService.removeProject(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

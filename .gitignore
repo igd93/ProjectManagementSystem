@@ -21,6 +21,9 @@ bin/
 #Config file
 src/main/resources/application.yml
 
+#logs
+*.log
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
