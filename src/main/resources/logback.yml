@@ -1,0 +1,31 @@
+configuration:
+  appender:
+  - '@class': ch.qos.logback.core.ConsoleAppender
+    '@name': Console
+    layout:
+      '@class': ch.qos.logback.classic.PatternLayout
+      Pattern: '%-30(%d %p) %-30.30([%t] %C): %msg%n%throwable'
+  - '@class': ch.qos.logback.core.rolling.RollingFileAppender
+    '@name': File
+    encoder:
+      '@class': ch.qos.logback.classic.encoder.PatternLayoutEncoder
+      Pattern: '%d %p [%t] %C: %msg%n%throwable'
+    file: logs/app-logback.log
+    rollingPolicy:
+      '@class': ch.qos.logback.core.rolling.TimeBasedRollingPolicy
+      fileNamePattern: logs/archived/app-%d{yyyy-MM-dd}.%i-logback.log
+      timeBasedFileNamingAndTriggeringPolicy:
+        '@class': ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP
+        maxFileSize: 10MB
+  logger:
+    '@additivity': 'false'
+    '@level': DEBUG
+    '@name': com.example.spring.demo.projectmanagement
+    appender-ref:
+    - '@ref': File
+    - '@ref': Console
+  root:
+    '@level': INFO
+    appender-ref:
+    - '@ref': File
+    - '@ref': Console
