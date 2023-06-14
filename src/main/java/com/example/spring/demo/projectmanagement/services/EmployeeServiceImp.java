@@ -56,10 +56,12 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
+        //convert list to set, to avoid dups
         List<Long> projectIds = employeeRequestDTO.getProjects();
         if(!CollectionUtils.isEmpty(projectIds)) {
             List<Project> projects = projectRepository.findAllById(projectIds);
             if (projects.size() != projectIds.size()) {
+                //should not operate on a DTO list, create a new one (via stream)
                 projectIds.removeAll(projects.stream().map(Project::getId).toList());
                 throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Records with the ids "
                         + projectIds + " do not exist");
@@ -93,8 +95,8 @@ public class EmployeeServiceImp implements EmployeeService {
             } else {
                 employee.setProjects(projects);
             }
-            employeeRepository.save(employee);
         }
+        employeeRepository.save(employee);
     }
 
     @Override
@@ -108,6 +110,7 @@ public class EmployeeServiceImp implements EmployeeService {
             employeeRepository.save(employee);
         }
         else {
+            //custom exception for each optional
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + employeeId
                     + "or project with id " + projectId + " does not exist");
         }
@@ -124,6 +127,7 @@ public class EmployeeServiceImp implements EmployeeService {
             employeeRepository.save(employee);
         }
         else {
+            //custom exception for each optional
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id "
                     + employeeId + "or project with id " + projectId + " does not exist");
         }
@@ -131,6 +135,7 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public void deleteEmployee(Long id) {
+        //check if the id exists
         employeeRepository.deleteById(id);
     }
 
