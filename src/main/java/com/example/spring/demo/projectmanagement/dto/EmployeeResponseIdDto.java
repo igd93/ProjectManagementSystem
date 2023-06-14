@@ -1,16 +1,16 @@
 package com.example.spring.demo.projectmanagement.dto;
 
 //This should not be reused for both Employee ad Project
-public class EmployeeResponseIdDTO {
+public class EmployeeResponseIdDto {
 
     private Long id;
 
 
-    public EmployeeResponseIdDTO() {
+    public EmployeeResponseIdDto() {
 
     }
 
-    public EmployeeResponseIdDTO(Long id) {
+    public EmployeeResponseIdDto(Long id) {
         this.id = id;
     }
 

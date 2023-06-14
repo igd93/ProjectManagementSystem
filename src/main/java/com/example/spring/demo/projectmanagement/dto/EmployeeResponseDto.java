@@ -1,10 +1,8 @@
 package com.example.spring.demo.projectmanagement.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-public class EmployeeResponseDTO {
+public class EmployeeResponseDto {
 
 
     private Long id;
@@ -14,7 +12,7 @@ public class EmployeeResponseDTO {
 
 
 
-    public EmployeeResponseDTO() {
+    public EmployeeResponseDto() {
 
     }
 

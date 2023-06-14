@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeResponseCardDTO {
+public class EmployeeResponseCardDto {
 
     //Should have a derived class in this package
 
@@ -14,9 +14,9 @@ public class EmployeeResponseCardDTO {
 
     private Date dateOfBirth;
 
-    private List<ProjectResponseDTO> projects;
+    private List<ProjectResponseDto> projects;
 
-    public EmployeeResponseCardDTO() {
+    public EmployeeResponseCardDto() {
         projects = new ArrayList<>();
     }
 
@@ -52,11 +52,11 @@ public class EmployeeResponseCardDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<ProjectResponseDTO> getProjects() {
+    public List<ProjectResponseDto> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<ProjectResponseDTO> projects) {
+    public void setProjects(List<ProjectResponseDto> projects) {
         this.projects = projects;
     }
 }

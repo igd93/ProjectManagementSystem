@@ -1,23 +1,21 @@
 package com.example.spring.demo.projectmanagement.services;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
-import com.example.spring.demo.projectmanagement.entities.Employee;
-import com.example.spring.demo.projectmanagement.entities.Project;
+import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeResponseDTO> allEmployees();
+    List<EmployeeResponseDto> allEmployees();
 
-    EmployeeResponseCardDTO getEmployee(Long id);
+    EmployeeResponseCardDto getEmployee(Long id);
 
-    EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employee);
+    EmployeeResponseIdDto addEmployee(EmployeeRequestDto employee);
 
-    void updateEmployee(Long id, EmployeeRequestDTO updatedEmployee);
+    void updateEmployee(Long id, EmployeeRequestDto updatedEmployee);
 
     void linkProject(Long employeeId, Long projectId);
 

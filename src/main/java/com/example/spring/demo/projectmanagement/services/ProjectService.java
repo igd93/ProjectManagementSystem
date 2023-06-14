@@ -1,9 +1,9 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectRequestDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDto;
 import com.example.spring.demo.projectmanagement.entities.Project;
 
 import java.util.List;
@@ -12,13 +12,13 @@ public interface ProjectService {
 
     List<Project> projectIdsToProject(List<Long> projectIds);
 
-    List<ProjectResponseDTO> allProjects();
+    List<ProjectResponseDto> allProjects();
 
-    ProjectResponseDTO getProject(Long id);
+    ProjectResponseDto getProject(Long id);
 
-    ProjectResponseIdDTO createProject(ProjectRequestDTO project);
+    ProjectResponseIdDto createProject(ProjectRequestDto project);
 
-    void updateProject(Long id, ProjectRequestDTO updateProject);
+    void updateProject(Long id, ProjectRequestDto updateProject);
 
     //void assignEmployee(Long projectId, Long employeeId);
 

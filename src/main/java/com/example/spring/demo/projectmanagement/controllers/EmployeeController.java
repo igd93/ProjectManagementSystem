@@ -1,16 +1,15 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,21 +29,21 @@ public class EmployeeController {
 
 
     @GetMapping
-    public ResponseEntity<List<EmployeeResponseDTO>> getEmployees() {
+    public ResponseEntity<List<EmployeeResponseDto>> getEmployees() {
         logger.info("Getting the list of all employees");
         return ResponseEntity.ok(employeeService.allEmployees());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeResponseCardDTO> getEmployee(@PathVariable Long id) {
-        logger.info("Geting employee with an id {}", id);
+    public ResponseEntity<EmployeeResponseCardDto> getEmployee(@PathVariable Long id) {
+        logger.info("Getting employee with an id {}", id);
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
 
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseIdDTO> createEmployee(@RequestBody EmployeeRequestDTO employee) {
+    public ResponseEntity<EmployeeResponseIdDto> createEmployee(@RequestBody EmployeeRequestDto employee) {
         logger.info("Creating an employee {}", employee.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employee));
     }
@@ -68,7 +67,7 @@ public class EmployeeController {
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDTO updateEmployee) {
+    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDto updateEmployee) {
         logger.info("Updating the employee {} data", id);
         employeeService.updateEmployee(id, updateEmployee);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

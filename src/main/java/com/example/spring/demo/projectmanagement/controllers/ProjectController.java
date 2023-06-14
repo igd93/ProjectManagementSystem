@@ -1,9 +1,9 @@
 package com.example.spring.demo.projectmanagement.controllers;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectRequestDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDto;
 import com.example.spring.demo.projectmanagement.services.ProjectService;
 import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
 import org.slf4j.Logger;
@@ -29,24 +29,24 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDTO>> getProjects() {
+    public ResponseEntity<List<ProjectResponseDto>> getProjects() {
         logger.info("Getting the list of all projects");
-        List<ProjectResponseDTO> projectResponseDTOS = projectService.allProjects();
-        return ResponseEntity.ok(projectResponseDTOS);
+        List<ProjectResponseDto> projectResponseDtos = projectService.allProjects();
+        return ResponseEntity.ok(projectResponseDtos);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> getProject(@PathVariable Long id) {
+    public ResponseEntity<ProjectResponseDto> getProject(@PathVariable Long id) {
         logger.info("Getting the project with id {}", id);
-        ProjectResponseDTO projectResponseDTO = projectService.getProject(id);
+        ProjectResponseDto projectResponseDTO = projectService.getProject(id);
         return ResponseEntity.ok(projectResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponseIdDTO> createProject(@RequestBody ProjectRequestDTO project) {
+    public ResponseEntity<ProjectResponseIdDto> createProject(@RequestBody ProjectRequestDto project) {
         logger.info("Creating a project {} ", project.getName());
-        ProjectResponseIdDTO projectResponseIdDTO = projectService.createProject(project);
+        ProjectResponseIdDto projectResponseIdDTO = projectService.createProject(project);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectResponseIdDTO);
     }
 
@@ -62,7 +62,7 @@ public class ProjectController {
 
     // Fix to NoContent and void body
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO updatedProject) {
+    public ResponseEntity<Void> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto updatedProject) {
        logger.info("Updating the project {} id", id);
        projectService.updateProject(id, updatedProject);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

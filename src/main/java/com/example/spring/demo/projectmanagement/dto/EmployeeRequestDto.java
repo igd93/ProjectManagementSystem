@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeRequestDTO {
+public class EmployeeRequestDto {
         private String name;
         private String familyName;
         private Date dateOfBirth;
@@ -12,7 +12,7 @@ public class EmployeeRequestDTO {
         //initialize in constructor
         private List<Long> projects;
 
-        public EmployeeRequestDTO() {
+        public EmployeeRequestDto() {
             projects = new ArrayList<>();
         }
 

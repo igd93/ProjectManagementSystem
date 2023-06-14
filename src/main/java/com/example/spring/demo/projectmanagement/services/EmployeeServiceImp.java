@@ -1,9 +1,9 @@
 package com.example.spring.demo.projectmanagement.services;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
@@ -16,7 +16,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
@@ -40,13 +39,13 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponseDTO> allEmployees() {
+    public List<EmployeeResponseDto> allEmployees() {
         List<Employee> employees = employeeRepository.findAll();
         return employeeMapper.entityToDTO(employees);
     }
 
     @Override
-    public EmployeeResponseCardDTO getEmployee(Long id) {
+    public EmployeeResponseCardDto getEmployee(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with such id "
                         + id + " does not exist"));
@@ -54,7 +53,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponseIdDTO addEmployee(EmployeeRequestDTO employeeRequestDTO) {
+    public EmployeeResponseIdDto addEmployee(EmployeeRequestDto employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
         //convert list to set, to avoid dups
         List<Long> projectIds = employeeRequestDTO.getProjects();
@@ -71,11 +70,11 @@ public class EmployeeServiceImp implements EmployeeService {
             }
         }
         Long employeeId = employeeRepository.save(employee).getId();
-        return new EmployeeResponseIdDTO(employeeId);
+        return new EmployeeResponseIdDto(employeeId);
     }
 
     @Override
-    public void updateEmployee(Long id, EmployeeRequestDTO updatedEmployee) {
+    public void updateEmployee(Long id, EmployeeRequestDto updatedEmployee) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee with id "
                         + id + " cannot be updated as it does not exist"));
@@ -101,44 +100,35 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public void linkProject(Long employeeId, Long projectId) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-        Optional<Project> optionalProject = projectRepository.findById(projectId);
-        if (optionalEmployee.isPresent() && optionalProject.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            Project project = optionalProject.get();
-            employee.addProject(project);
-            employeeRepository.save(employee);
-        }
-        else {
-            //custom exception for each optional
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + employeeId
-                    + "or project with id " + projectId + " does not exist");
-        }
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id"
+                        + employeeId + " does not exist"));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project with id"
+                        + projectId + "does not exist"));
+        employee.addProject(project);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void unlinkProject(Long employeeId, Long projectId) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-        Optional<Project> optionalProject = projectRepository.findById(projectId);
-        if (optionalEmployee.isPresent() && optionalProject.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            Project project = optionalProject.get();
-            employee.removeProject(project);
-            employeeRepository.save(employee);
-        }
-        else {
-            //custom exception for each optional
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id "
-                    + employeeId + "or project with id " + projectId + " does not exist");
-        }
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id"
+                        + employeeId + " does not exist"));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project with id"
+                        + projectId + "does not exist"));
+        employee.removeProject(project);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void deleteEmployee(Long id) {
         //check if the id exists
+        employeeRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + id + "dos not exist"));
         employeeRepository.deleteById(id);
     }
-
-
 
 }
