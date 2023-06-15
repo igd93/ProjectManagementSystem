@@ -137,7 +137,8 @@ public class EmployeeServiceImp implements EmployeeService {
         //check if the id exists
         employeeRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + id + " does not exist"));
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id "
+                                + id + " does not exist"));
         employeeRepository.deleteById(id);
     }
 

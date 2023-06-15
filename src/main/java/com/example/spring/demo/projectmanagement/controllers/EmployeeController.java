@@ -68,7 +68,7 @@ public class EmployeeController {
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeRequestDto updateEmployee) {
+    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDto updateEmployee) {
         logger.info("Updating the employee {} data", id);
         employeeService.updateEmployee(id, updateEmployee);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
