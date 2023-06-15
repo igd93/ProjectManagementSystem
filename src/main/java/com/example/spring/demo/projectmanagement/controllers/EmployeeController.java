@@ -5,6 +5,7 @@ import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 import com.example.spring.demo.projectmanagement.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseIdDto> createEmployee(@RequestBody EmployeeRequestDto employee) {
+    public ResponseEntity<EmployeeResponseIdDto> createEmployee(@Valid @RequestBody EmployeeRequestDto employee) {
         logger.info("Creating an employee {}", employee.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employee));
     }
@@ -67,7 +68,7 @@ public class EmployeeController {
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDto updateEmployee) {
+    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeRequestDto updateEmployee) {
         logger.info("Updating the employee {} data", id);
         employeeService.updateEmployee(id, updateEmployee);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -80,7 +81,5 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
 
 }

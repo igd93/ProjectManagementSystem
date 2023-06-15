@@ -1,53 +1,67 @@
 package com.example.spring.demo.projectmanagement.dto;
 
+import com.example.spring.demo.projectmanagement.constraints.BirthDate;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class EmployeeRequestDto {
-        private String name;
-        private String familyName;
-        private Date dateOfBirth;
 
-        //initialize in constructor
-        private Set<Long> projects;
+    @NotNull(message = "Family should be specified")
+    private String name;
 
-        public EmployeeRequestDto() {
-            projects = new HashSet<>();
-        }
+    @NotNull(message = "Family Name")
+    private String familyName;
 
 
-        public String getName() {
-            return name;
-        }
+    @Past(message = "Date of birth cannot be set in the future")
+    @DateTimeFormat
+    @NotNull(message = "The date of birth is required")
+    @BirthDate(message = "The employee must be 18 or older")
+    private Date dateOfBirth;
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    //initialize in constructor
+    private Set<Long> projects;
 
-        public String getFamilyName() {
-            return familyName;
-        }
+    public EmployeeRequestDto() {
+        projects = new HashSet<>();
+    }
 
-        public void setFamilyName(String familyName) {
-            this.familyName = familyName;
-        }
 
-        public Date getDateOfBirth() {
-            return dateOfBirth;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setDateOfBirth(Date dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public void setProjects(Set<Long> projects) {
-            this.projects = projects;
-        }
+    public String getFamilyName() {
+        return familyName;
+    }
 
-        public Set<Long> getProjects() {
-            return projects;
-        }
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setProjects(Set<Long> projects) {
+        this.projects = projects;
+    }
+
+    public Set<Long> getProjects() {
+        return projects;
+    }
 }

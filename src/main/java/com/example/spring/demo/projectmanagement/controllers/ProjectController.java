@@ -6,6 +6,7 @@ import com.example.spring.demo.projectmanagement.dto.ProjectResponseDto;
 import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDto;
 import com.example.spring.demo.projectmanagement.services.ProjectService;
 import com.example.spring.demo.projectmanagement.services.ProjectServiceImp;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponseIdDto> createProject(@RequestBody ProjectRequestDto project) {
+    public ResponseEntity<ProjectResponseIdDto> createProject( @Valid @RequestBody ProjectRequestDto project) {
         logger.info("Creating a project {} ", project.getName());
         ProjectResponseIdDto projectResponseIdDTO = projectService.createProject(project);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectResponseIdDTO);
