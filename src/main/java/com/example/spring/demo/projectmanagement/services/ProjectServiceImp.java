@@ -116,7 +116,7 @@ public class ProjectServiceImp implements ProjectService {
     public void removeProject(Long id) {
         projectRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Project with id" + id + "does not exist"));
+                        "Project with id " + id + " does not exist"));
         projectRepository.deleteById(id);
     }
 }
