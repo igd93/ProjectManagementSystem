@@ -2,7 +2,9 @@ package com.example.spring.demo.projectmanagement.dto;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EmployeeRequestDto {
         private String name;
@@ -10,10 +12,10 @@ public class EmployeeRequestDto {
         private Date dateOfBirth;
 
         //initialize in constructor
-        private List<Long> projects;
+        private Set<Long> projects;
 
         public EmployeeRequestDto() {
-            projects = new ArrayList<>();
+            projects = new HashSet<>();
         }
 
 
@@ -41,11 +43,11 @@ public class EmployeeRequestDto {
             this.dateOfBirth = dateOfBirth;
         }
 
-        public void setProjects(List<Long> projects) {
+        public void setProjects(Set<Long> projects) {
             this.projects = projects;
         }
 
-        public List<Long> getProjects() {
+        public Set<Long> getProjects() {
             return projects;
         }
 }

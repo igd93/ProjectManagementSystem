@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.*;
 
-
-
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -38,10 +36,10 @@ public class Employee {
         inverseJoinColumns =@JoinColumn(name = "projectId")
     )
     @JsonIgnoreProperties("employeeList")
-    private List<Project> projects;// list of projects an employee is assigned to
+    private Set<Project> projects;// list of projects an employee is assigned to
 
     public Employee() {
-         projects = new ArrayList<>();
+         projects = new HashSet<>();
     }
 
     public Employee(String name, String familyName, Date dateOfBirth) {
@@ -50,7 +48,7 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Employee(String name, String familyName, Date dateOfBirth, List<Project> projects) {
+    public Employee(String name, String familyName, Date dateOfBirth, Set<Project> projects) {
         super();
         this.name = name;
         this.familyName = familyName;
@@ -90,11 +88,11 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Project> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 

@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
@@ -56,14 +59,17 @@ public class EmployeeServiceImp implements EmployeeService {
     public EmployeeResponseIdDto addEmployee(EmployeeRequestDto employeeRequestDTO) {
         Employee employee = employeeMapper.dTOToEntity(employeeRequestDTO);
         //convert list to set, to avoid dups
-        List<Long> projectIds = employeeRequestDTO.getProjects();
+        Set<Long> projectIds = employeeRequestDTO.getProjects();
         if(!CollectionUtils.isEmpty(projectIds)) {
-            List<Project> projects = projectRepository.findAllById(projectIds);
+            Set<Project> projects = new HashSet<>(projectRepository.findAllById(projectIds));
             if (projects.size() != projectIds.size()) {
-                //should not operate on a DTO list, create a new one (via stream)
-                projectIds.removeAll(projects.stream().map(Project::getId).toList());
+                Set<Long> correctIds = projects.stream()
+                        .map(Project::getId)
+                        .collect(Collectors.toSet());
+                Set<Long> incorrectIds = projectIds.stream().filter(projectId -> !correctIds.contains(projectId))
+                        .collect(Collectors.toSet());
                 throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Records with the ids "
-                        + projectIds + " do not exist");
+                        + incorrectIds + " do not exist");
             }
             else {
                 employee.setProjects(projects);
@@ -84,13 +90,17 @@ public class EmployeeServiceImp implements EmployeeService {
             employee.setFamilyName(updatedEmployee.getFamilyName());
         if (updatedEmployee.getDateOfBirth() != null)
             employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
-        List<Long> projectIds = updatedEmployee.getProjects();
+        Set<Long> projectIds = updatedEmployee.getProjects();
         if (!CollectionUtils.isEmpty(projectIds)) {
-            List<Project> projects = projectRepository.findAllById(projectIds);
+            Set<Project> projects = new HashSet<>(projectRepository.findAllById(projectIds));
             if (projects.size() != projectIds.size()) {
-                projectIds.removeAll(projects.stream().map(Project::getId).toList());
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Records with the ids "
-                        + projectIds + " do not exist");
+                Set<Long> correctIds = projects.stream()
+                        .map(Project::getId)
+                        .collect(Collectors.toSet());
+                Set<Long> incorrectIds = projectIds.stream().filter(projectId -> !correctIds.contains(projectId))
+                        .collect(Collectors.toSet());
+                throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Records with the ids "
+                        + incorrectIds + " do not exist");
             } else {
                 employee.setProjects(projects);
             }

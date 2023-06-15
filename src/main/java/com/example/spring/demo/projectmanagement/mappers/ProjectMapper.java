@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,7 +31,7 @@ public class ProjectMapper {
         return projectResponseIdDTO;
     }
 
-    public List<ProjectResponseDto> entityToDTO(List<Project> projects) {
+    public List<ProjectResponseDto> entityToDTO(Set<Project> projects) {
         return projects.stream().map(this::entityToDTO).collect(Collectors.toList());
     }
 
