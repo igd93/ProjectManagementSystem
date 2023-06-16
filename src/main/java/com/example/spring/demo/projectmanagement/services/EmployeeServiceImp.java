@@ -9,14 +9,21 @@ import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.EmployeeMapper;
 import com.example.spring.demo.projectmanagement.repositories.EmployeeRepository;
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.SmartValidator;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,14 +37,18 @@ public class EmployeeServiceImp implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
+    private final SmartValidator validator;
+
 
     @Autowired
     public EmployeeServiceImp(EmployeeRepository employeeRepository,
                               EmployeeMapper employeeMapper,
-                              ProjectRepository projectRepository) {
+                              ProjectRepository projectRepository,
+                              SmartValidator validator) {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.projectRepository = projectRepository;
+        this.validator = validator;
 
     }
 
@@ -80,17 +91,25 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(Long id, EmployeeRequestDto updatedEmployee) {
+    public void updateEmployee(Long id, Map<String, Object> changes) throws ResponseStatusException{
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee with id "
-                        + id + " cannot be updated as it does not exist"));
-        if (updatedEmployee.getName() != null)
-            employee.setName(updatedEmployee.getName());
-        if (updatedEmployee.getFamilyName() != null)
-            employee.setFamilyName(updatedEmployee.getFamilyName());
-        if (updatedEmployee.getDateOfBirth() != null)
-            employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
-        Set<Long> projectIds = updatedEmployee.getProjects();
+                + id + " cannot be updated as it does not exist"));
+        EmployeeRequestDto employeeRequestDto = new EmployeeRequestDto();
+        WebDataBinder binder = new WebDataBinder(employeeRequestDto);
+        BindingResult bindingResult = binder.getBindingResult();
+        binder.bind(new MutablePropertyValues(changes));
+        changes.forEach((k, v) -> validator.validateValue(EmployeeRequestDto.class, k, v, bindingResult));
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, bindingResult.getFieldErrors().toString());
+        }
+        if (employeeRequestDto.getName() != null)
+            employee.setName(employeeRequestDto.getName());
+        if (employeeRequestDto.getFamilyName() != null)
+            employee.setFamilyName(employeeRequestDto.getFamilyName());
+        if (employeeRequestDto.getDateOfBirth() != null)
+            employee.setDateOfBirth(employeeRequestDto.getDateOfBirth());
+        Set<Long> projectIds = employeeRequestDto.getProjects();
         if (!CollectionUtils.isEmpty(projectIds)) {
             Set<Project> projects = new HashSet<>(projectRepository.findAllById(projectIds));
             if (projects.size() != projectIds.size()) {
@@ -107,6 +126,35 @@ public class EmployeeServiceImp implements EmployeeService {
         }
         employeeRepository.save(employee);
     }
+
+//    @Override
+//    public void updateEmployee(Long id, EmployeeRequestDto updatedEmployee) {
+//        Employee employee = employeeRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee with id "
+//                        + id + " cannot be updated as it does not exist"));
+//        if (updatedEmployee.getName() != null)
+//            employee.setName(updatedEmployee.getName());
+//        if (updatedEmployee.getFamilyName() != null)
+//            employee.setFamilyName(updatedEmployee.getFamilyName());
+//        if (updatedEmployee.getDateOfBirth() != null)
+//            employee.setDateOfBirth(updatedEmployee.getDateOfBirth());
+//        Set<Long> projectIds = updatedEmployee.getProjects();
+//        if (!CollectionUtils.isEmpty(projectIds)) {
+//            Set<Project> projects = new HashSet<>(projectRepository.findAllById(projectIds));
+//            if (projects.size() != projectIds.size()) {
+//                Set<Long> correctIds = projects.stream()
+//                        .map(Project::getId)
+//                        .collect(Collectors.toSet());
+//                Set<Long> incorrectIds = projectIds.stream().filter(projectId -> !correctIds.contains(projectId))
+//                        .collect(Collectors.toSet());
+//                throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Records with the ids "
+//                        + incorrectIds + " do not exist");
+//            } else {
+//                employee.setProjects(projects);
+//            }
+//        }
+//        employeeRepository.save(employee);
+//    }
 
     @Override
     public void linkProject(Long employeeId, Long projectId) {

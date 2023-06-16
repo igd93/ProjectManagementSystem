@@ -4,8 +4,10 @@ import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
 
@@ -15,7 +17,9 @@ public interface EmployeeService {
 
     EmployeeResponseIdDto addEmployee(EmployeeRequestDto employee);
 
-    void updateEmployee(Long id, EmployeeRequestDto updatedEmployee);
+    //void updateEmployee(Long id, EmployeeRequestDto updateEmployee);
+
+    void updateEmployee(Long id, Map<String, Object> changes) throws MethodArgumentNotValidException;
 
     void linkProject(Long employeeId, Long projectId);
 
