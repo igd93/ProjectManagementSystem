@@ -1,6 +1,7 @@
 package com.example.spring.demo.projectmanagement.dto;
 
 import com.example.spring.demo.projectmanagement.constraints.BirthDate;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,10 +12,10 @@ import java.util.Set;
 
 public class EmployeeRequestDto {
 
-    @NotNull(message = "Family should be specified")
+    @NotBlank(message = "Family should be specified")
     private String name;
 
-    @NotNull(message = "Family Name")
+    @NotBlank(message = "Family Name")
     private String familyName;
 
 
