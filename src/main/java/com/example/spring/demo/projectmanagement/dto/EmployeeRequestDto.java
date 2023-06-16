@@ -1,6 +1,7 @@
 package com.example.spring.demo.projectmanagement.dto;
 
 import com.example.spring.demo.projectmanagement.constraints.BirthDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -12,10 +13,10 @@ import java.util.Set;
 
 public class EmployeeRequestDto {
 
-    @NotBlank(message = "Family should be specified")
+    @NotBlank(message = "name should be specified")
     private String name;
 
-    @NotBlank(message = "Family Name")
+    @NotBlank(message = "Family Name should be specified")
     private String familyName;
 
 
@@ -23,6 +24,7 @@ public class EmployeeRequestDto {
     @DateTimeFormat
     @NotNull(message = "The date of birth is required")
     @BirthDate(message = "The employee must be 18 or older")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     //initialize in constructor
