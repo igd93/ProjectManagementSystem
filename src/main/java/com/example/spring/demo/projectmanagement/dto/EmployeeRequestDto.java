@@ -31,7 +31,6 @@ public class EmployeeRequestDto {
         projects = new HashSet<>();
     }
 
-
     public String getName() {
         return name;
     }
