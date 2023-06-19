@@ -5,6 +5,7 @@ import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
 import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public interface EmployeeService {
 
     //void updateEmployee(Long id, EmployeeRequestDto updateEmployee);
 
-    void updateEmployee(Long id, Map<String, Object> changes) throws MethodArgumentNotValidException;
+    void updateEmployee(Long id, Map<String, Object> changes) throws ResponseStatusException;
 
     void linkProject(Long employeeId, Long projectId);
 

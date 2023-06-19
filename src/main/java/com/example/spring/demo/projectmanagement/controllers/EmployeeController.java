@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class EmployeeController {
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
     public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody Map<String, Object> update)
-            throws MethodArgumentNotValidException {
+            throws ResponseStatusException {
         logger.info("Updating the employee {} data", id);
         employeeService.updateEmployee(id, update);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
