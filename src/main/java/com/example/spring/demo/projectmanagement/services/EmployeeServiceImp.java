@@ -101,7 +101,7 @@ public class EmployeeServiceImp implements EmployeeService {
         binder.bind(new MutablePropertyValues(changes));
         changes.forEach((k, v) -> validator.validateValue(EmployeeRequestDto.class, k, v, bindingResult));
         if (bindingResult.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, bindingResult.getFieldErrors().toString());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, bindingResult.getAllErrors().toString());
         }
         if (employeeRequestDto.getName() != null)
             employee.setName(employeeRequestDto.getName());
