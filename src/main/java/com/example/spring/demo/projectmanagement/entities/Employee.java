@@ -1,11 +1,15 @@
 package com.example.spring.demo.projectmanagement.entities;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "Employee")
@@ -14,7 +18,11 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     private String name;
+
+
     private String familyName;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -27,10 +35,10 @@ public class Employee {
         inverseJoinColumns =@JoinColumn(name = "projectId")
     )
     @JsonIgnoreProperties("employeeList")
-    private List<Project> projects = new ArrayList<>(); // list of projects an employee is assigned to
+    private Set<Project> projects;// list of projects an employee is assigned to
 
     public Employee() {
-
+         projects = new HashSet<>();
     }
 
     public Employee(String name, String familyName, Date dateOfBirth) {
@@ -39,7 +47,7 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Employee(String name, String familyName, Date dateOfBirth, List<Project> projects) {
+    public Employee(String name, String familyName, Date dateOfBirth, Set<Project> projects) {
         super();
         this.name = name;
         this.familyName = familyName;
@@ -79,22 +87,20 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Project> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 
     public void addProject(Project project) {
-
         projects.add(project);
         project.getEmployeeList().add(this);
     }
 
     public void removeProject(Project project) {
-
         if (projects != null) projects.remove(project);
         project.getEmployeeList().remove(this);
     }

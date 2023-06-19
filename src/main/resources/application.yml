@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    change-log: db/changelog/changelog-master.yml
+  datasource:
+    url: jdbc:mysql://localhost:3306/your_db
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: validate
+      show_sql: true
+      format_sql: true

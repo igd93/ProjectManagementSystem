@@ -1,20 +1,20 @@
 package com.example.spring.demo.projectmanagement.services;
 
 
-import com.example.spring.demo.projectmanagement.dto.ProjectRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.ProjectRequestDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseDto;
+import com.example.spring.demo.projectmanagement.dto.ProjectResponseIdDto;
 import com.example.spring.demo.projectmanagement.entities.Project;
 import com.example.spring.demo.projectmanagement.mappers.ProjectMapper;
 import com.example.spring.demo.projectmanagement.repositories.ProjectRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProjectServiceImp implements ProjectService {
@@ -37,13 +37,13 @@ public class ProjectServiceImp implements ProjectService {
 
 
     @Override
-    public List<ProjectResponseDTO> allProjects() {
-        List<Project> projects =  projectRepository.findAll();
+    public List<ProjectResponseDto> allProjects() {
+        Set<Project> projects = new HashSet<>(projectRepository.findAll());
         return projectMapper.entityToDTO(projects);
     }
 
     @Override
-    public ProjectResponseDTO getProject(Long id) {
+    public ProjectResponseDto getProject(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Project with this id " + id
@@ -64,13 +64,13 @@ public class ProjectServiceImp implements ProjectService {
 //    }
 
     @Override
-    public ProjectResponseIdDTO createProject(ProjectRequestDTO project) {
+    public ProjectResponseIdDto createProject(ProjectRequestDto project) {
         Project savedProject = projectRepository.save(projectMapper.dTOToEntity(project));
         return projectMapper.idToDTO(savedProject);
     }
 
     @Override
-    public void updateProject(Long id, ProjectRequestDTO updateProject) {
+    public void updateProject(Long id, ProjectRequestDto updateProject) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project with id "
                         + id + " cannot be updated, as it does not exist"));
@@ -113,6 +113,9 @@ public class ProjectServiceImp implements ProjectService {
 
     @Override
     public void removeProject(Long id) {
+        projectRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Project with id " + id + " does not exist"));
         projectRepository.deleteById(id);
     }
 }

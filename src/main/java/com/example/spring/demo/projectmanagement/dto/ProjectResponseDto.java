@@ -1,12 +1,12 @@
 package com.example.spring.demo.projectmanagement.dto;
 
-public class ProjectResponseDTO {
+public class ProjectResponseDto {
 
     private Long id;
 
     private String name;
 
-    public ProjectResponseDTO() {
+    public ProjectResponseDto() {
 
     }
 

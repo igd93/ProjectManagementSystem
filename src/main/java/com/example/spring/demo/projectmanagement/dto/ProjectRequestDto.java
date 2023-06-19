@@ -1,12 +1,16 @@
 package com.example.spring.demo.projectmanagement.dto;
 
-public class ProjectRequestDTO {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public class ProjectRequestDto {
 
     private Long id;
 
+    @NotNull
     private String name;
 
-    public ProjectRequestDTO() {
+    public ProjectRequestDto() {
 
     }
 

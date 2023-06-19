@@ -1,9 +1,9 @@
 package com.example.spring.demo.projectmanagement.mappers;
 
-import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDTO;
-import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDTO;
+import com.example.spring.demo.projectmanagement.dto.EmployeeRequestDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseCardDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseDto;
+import com.example.spring.demo.projectmanagement.dto.EmployeeResponseIdDto;
 import com.example.spring.demo.projectmanagement.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,9 +21,10 @@ public class EmployeeMapper {
         this.projectMapper = projectMapper;
     }
 
+
     //general mapper for request and response
-    public EmployeeResponseDTO entityToDTO(Employee employee) {
-        EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
+    public EmployeeResponseDto entityToDTO(Employee employee) {
+        EmployeeResponseDto employeeResponseDTO = new EmployeeResponseDto();
         employeeResponseDTO.setId(employee.getId());
         employeeResponseDTO.setName(employee.getName());
         employeeResponseDTO.setFamilyName(employee.getFamilyName());
@@ -31,12 +32,12 @@ public class EmployeeMapper {
         return employeeResponseDTO;
     }
 
-    public List<EmployeeResponseDTO> entityToDTO(List<Employee> employees) {
+    public List<EmployeeResponseDto> entityToDTO(List<Employee> employees) {
         return  employees.stream().map(this::entityToDTO).collect(Collectors.toList());
     }
 
-    public EmployeeResponseCardDTO entityToCardDTO(Employee employee) {
-        EmployeeResponseCardDTO employeeResponseCardDTO = new EmployeeResponseCardDTO();
+    public EmployeeResponseCardDto entityToCardDTO(Employee employee) {
+        EmployeeResponseCardDto employeeResponseCardDTO = new EmployeeResponseCardDto();
         employeeResponseCardDTO.setId(employee.getId());
         employeeResponseCardDTO.setName(employee.getName());
         employeeResponseCardDTO.setFamilyName(employee.getFamilyName());
@@ -45,13 +46,13 @@ public class EmployeeMapper {
         return employeeResponseCardDTO;
     }
 
-    public EmployeeResponseIdDTO employeeToId(Employee employee) {
-        EmployeeResponseIdDTO employeeResponseIdDTO = new EmployeeResponseIdDTO();
+    public EmployeeResponseIdDto employeeToId(Employee employee) {
+        EmployeeResponseIdDto employeeResponseIdDTO = new EmployeeResponseIdDto();
         employeeResponseIdDTO.setId(employee.getId());
         return employeeResponseIdDTO;
     }
 
-    public Employee dTOToEntity(EmployeeRequestDTO employeeRequestDTO) {
+    public Employee dTOToEntity(EmployeeRequestDto employeeRequestDTO) {
         Employee employee = new Employee();
         employee.setName(employeeRequestDTO.getName());
         employee.setFamilyName(employeeRequestDTO.getFamilyName());
